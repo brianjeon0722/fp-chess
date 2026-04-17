@@ -60,4 +60,5 @@ for opening_name, moves in openings.items():
     }
     openings_list.append(entry)
 
-
+# Smith-Morra Declined Accepted --> merge together
+# gut check some openings
