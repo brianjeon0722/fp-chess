@@ -24,11 +24,11 @@ for a in range(20, 100):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
             if re.search(r"[,]", opening_name) != None:
                 opening_name = opening_name[:re.search(r"[,]", opening_name).start()]
-            all_sicilian_names[opening_name] = opening.moves_str
+            if opening_name not in all_sicilian_names:
+                all_sicilian_names[opening_name] = []
+            all_sicilian_names[opening_name].append(opening.moves_str)
 
-for name in sorted(all_sicilian_names):
-    print(name)
-    print(all_sicilian_names[name])
+print(all_sicilian_names["Sicilian: English"])
 
 
 
