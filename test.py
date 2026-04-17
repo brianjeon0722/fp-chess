@@ -37,18 +37,19 @@ for opening_name, variations in openings.items():
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
     openings[opening_name] = common.split(' ')
 
-#{"Sicilian: Rossolimo": ['e4', 'c5', ...],
-# "Sicilian: Kan: [..],
-# "Sicilian: Dragon: [...]}
+openings_list = []
 
-# [{"name": "Sicilian",
-#   "line_name": "Rossolimo",
-#   "moves": [...]},
-#  {"name": "Sicilian",
-#   "line_name": "Kan",
-#   "moves": [...]}, ...
+for opening_name, moves in openings.items():
+    parts = opening_name.split(': ', 1)
+    entry = {
+        'name': parts[0],
+        'line_name': parts[1] if len(parts) > 1 else None,
+        'moves': moves
+    }
+    openings_list.append(entry)
 
-print(openings["Sicilian: Accelerated Fianchetto"])
+for i in openings_list:
+    print(i['line_name'])
 
 
 
