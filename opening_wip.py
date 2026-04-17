@@ -7,34 +7,26 @@ loaded_count = library.load_builtin_openings()
 
 all_openings = library.get_all_openings()
 
-print(f"Total openings: {len(all_openings)}")
-
-# for opening in all_openings[500:530]:
-#     print(opening.name)
-#     print(opening.eco_code)
-
 openings = {}
 
-openings = {}
 
 for a in range(0, 100):
     for opening in library.find_by_eco(f'A{a}'):
         opening_name = opening.name
-        if re.search(r"[1234567890]", opening_name) != None:
-            opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
-        if re.search(r"[,]", opening_name) != None:
-            opening_name = opening_name[:re.search(r"[,]", opening_name).start()]
-        # CLEAN: remove vs. artifacts
-        if re.search(r'\bvs\.?$', opening_name):
-            opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
-        if '/' in opening_name:
-            opening_name = opening_name[:opening_name.find('/')].strip()
-        generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Gambit Accepted', 'Gambit Declined', 'Gambit']
-        for term in generic_terms:
-            opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
-        opening_name = re.sub(r'\s+', ' ', opening_name).strip()
-        opening_name = opening_name.strip(':,').strip()
-        if opening_name not in openings:
+        if re.search(r"[1234567890]", opening_name) != None: # if there are numbers
+            opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1] # remove everything after the numbers
+        if re.search(r"[,]", opening_name) != None: # if there is a comma
+            opening_name = opening_name[:re.search(r"[,]", opening_name).start()] # remove everything after the coma
+        if re.search(r'\bvs\.?$', opening_name): # if there are any vs. or vs
+            opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip() # remove them
+        if '/' in opening_name: # if there is a / in the name
+            opening_name = opening_name[:opening_name.find('/')].strip() # remove it
+        generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack'] # different ways of saying an opening
+        for term in generic_terms: # for each of these
+            opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip() # remove them
+        opening_name = re.sub(r'\s+', ' ', opening_name).strip() # turn any double spaces we created about into a single one
+        opening_name = opening_name.strip(':,').strip() # remove trailing , or :
+        if opening_name not in openings: # if this is a new opening,
             openings[opening_name] = set()
         openings[opening_name].add(opening.moves_str)
 
