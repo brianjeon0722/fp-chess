@@ -13,7 +13,7 @@ print(f"Total openings: {len(all_openings)}")
 #     print(opening.name)
 #     print(opening.eco_code)
 
-all_sicilian_names = {}
+openings = {}
 
 for a in range(20, 100):
     for opening in library.find_by_eco(f'B{a}'):
@@ -25,18 +25,18 @@ for a in range(20, 100):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
             if re.search(r"[,]", opening_name) != None:
                 opening_name = opening_name[:re.search(r"[,]", opening_name).start()]
-            if opening_name not in all_sicilian_names:
-                all_sicilian_names[opening_name] = set()
-            all_sicilian_names[opening_name].add(opening.moves_str)
+            if opening_name not in openings:
+                openings[opening_name] = set()
+            openings[opening_name].add(opening.moves_str)
 
-for opening_name, variations in all_sicilian_names.items():
+for opening_name, variations in openings.items():
     common = os.path.commonprefix(list(variations)).rstrip()
     common = common.strip()
     if re.search(r'\d+\.', common):
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
-    all_sicilian_names[opening_name] = common.split(' ')
+    openings[opening_name] = common.split(' ')
 
-print(all_sicilian_names["Sicilian: Rossolimo"])
+print(openings["Sicilian: Rossolimo"])
 
 
 
