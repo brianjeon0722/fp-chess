@@ -80,7 +80,7 @@ def play_game(games):
     while times_played < games:
         guesses = 0
         computer_opening = random.choice(openings)
-        
+
         print(f'### Game {times_played} ###')
         board = chess.Board()
         for move in computer_opening['moves']:
@@ -91,7 +91,8 @@ def play_game(games):
         check_guess(computer_opening, guesses)
         times_played += 1
 
-
 def main():
     games = int(input('How many times would you like to play? ').strip())
     play_game(games)
+
+main()
