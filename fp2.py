@@ -55,7 +55,7 @@ def check_guess(computer_opening, guesses):
             return False, guesses
 
     else:
-        full_name = f'{computer_opening["name"]} {line_name}'
+        full_name = f'{computer_opening["name"]} {computer_opening["line_name"]}'
         if line_name in initial_guess:
             return correct(full_name, guesses)  # ← return the result
         elif opening_name in initial_guess:
@@ -91,7 +91,7 @@ def play_game(games):
             print(board)
             print('\n')
 
-        while not solved and guesses < 3:  # ← keep asking until solved or out of guesses
+        while not solved and guesses < 3:  # keep asking until solved or out of guesses
             solved, guesses = check_guess(computer_opening, guesses)
 
         times_played += 1
@@ -100,4 +100,4 @@ def main():
     games = int(input('How many times would you like to play? ').strip())
     play_game(games)
 
-main()
+
