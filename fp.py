@@ -26,6 +26,9 @@ openings = [{
     }
 ]
 
+def incorrect(guess):
+    
+
 games = int(input('How many times would you like to play? ').strip())
 
 times_played = 0
