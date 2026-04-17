@@ -15,8 +15,6 @@ print(f"Total openings: {len(all_openings)}")
 
 openings = {}
 
-openings = {}
-
 for a in range(20, 100):
     for opening in library.find_by_eco(f'C{a}'):
         opening_name = opening.name
@@ -37,7 +35,6 @@ for a in range(20, 100):
                 openings[opening_name] = set()
             openings[opening_name].add(opening.moves_str)
 
-# CLEAN: remove names that are prefixes of other names (handles Sozin, Prins, Smith-Morra, etc.)
 names = list(openings.keys())
 for name in names:
     if any(other != name and other.startswith(name) for other in names):
@@ -60,4 +57,4 @@ for opening_name, moves in openings.items():
     }
     openings_list.append(entry)
 
-
+print(openings_list)
