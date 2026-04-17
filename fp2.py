@@ -1,0 +1,117 @@
+import chess
+import random
+
+openings = [{
+    'name': 'Sicilian',
+    'line_name': 'Smith-Morra',
+    'moves': ['e4', 'c5', 'd4', 'cxd4', 'c3']},
+    {
+    'name': 'Sicilian',
+    'line_name': 'Accelerated Dragon',
+    'moves': ['e4', 'c5', 'Nf3', 'Nc6' 'd4', 'cxd4', 'Nxd4', 'g6']},
+    {
+    'name': 'Sicilian',
+    'line_name': 'Dragon',
+    'moves': ['e4', 'c5', 'Nf3', 'd6', 'd4', 'cxd4', 'Nxd4', 'Nf6', 'Nc3', 'g6']},
+    {
+    'name': 'Sicilian',
+    'line_name': 'Grand Prix',
+    'moves': ['e4', 'c5', 'Nc3', 'Nc6' 'f4']},
+    {
+    'name': 'Ruy Lopez',
+    'moves': ['e4', 'e5', 'Nf3', 'Nc6', 'Bb5']},
+    {
+    'name': 'Scotch',
+    'moves': ['e4', 'e5', 'Nf3', 'Nc6', 'd4']
+    }
+]
+
+computer_opening = random.choice(openings)
+
+def check_guess(computer_opening, guesses):
+    initial_guess = str(input('What opening is this? ')).lower().strip()
+    line_name = computer_opening.get('line_name')
+    full_name = f'{computer_opening["name"]} {line_name}' if line_name else computer_opening["name"]
+
+    # Correct on first try (full name or line name)
+    if initial_guess in [computer_opening['name'].lower(), line_name.lower() if line_name else None]:
+        if line_name and initial_guess == computer_opening['name'].lower():
+            line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ')
+            if line_guess == line_name.lower():
+                print(f'Correct! This is the {full_name}.\n')
+                return True, guesses
+        else:
+            print(f'Correct! This is the {full_name}.\n')
+            return True, guesses
+
+    guesses += 1
+    print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+    if guesses >= 3:
+        print(f'This is the {full_name}.\n')
+    return False, guesses
+
+
+games = int(input('How many times would you like to play? ').strip())
+
+times_played = 0
+wins = 0
+
+while times_played < games:
+
+    times_played += 1
+
+    computer_opening = random.choice(openings)
+
+    print(f'### Game {times_played} ###')
+    board = chess.Board() # reset chess board
+
+    for i in computer_opening['moves']:
+        board.push_san(i)
+        print(board)
+        print('\n')
+
+    guesses = 0
+
+    while guesses < 3:
+        initial_guess = str(input('What opening is this? ')).lower().strip()
+
+        if computer_opening.get('line_name') is not None:
+
+            if computer_opening['line_name'].lower().strip() == initial_guess:
+                print(f'Correct! This is the {computer_opening["name"]} {computer_opening["line_name"]}.\n')
+                wins += 1
+                break
+
+            elif computer_opening['name'].lower().strip() == initial_guess:
+                line_guess = str(input(f'What line of the {computer_opening["name"]} is this? ')).lower().strip()
+
+                if computer_opening['line_name'].lower().strip() == line_guess:
+                    print(f'Correct! This is the {computer_opening["name"]} {computer_opening["line_name"]}.\n')
+                    wins += 1
+                    break
+
+                else:
+                    guesses += 1
+                    print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+                    if guesses >= 3:
+                        print(f'This is the {computer_opening["name"]} {computer_opening["line_name"]}.\n')
+
+            else:
+                guesses += 1
+                print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+                if guesses >= 3:
+                    print(f'This is the {computer_opening["name"]} {computer_opening["line_name"]}.\n')
+
+        else:
+            if computer_opening['name'].lower().strip() == initial_guess:
+                print(f'Correct! This is the {computer_opening["name"]}.\n')
+                wins += 1
+                break
+            else:
+                guesses += 1
+                print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+                if guesses >= 3:
+                    print(f'This is the {computer_opening["name"]}.\n')
+
+
+print(f'You got {wins}/{games} correct!')
