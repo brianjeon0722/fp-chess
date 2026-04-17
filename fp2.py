@@ -32,8 +32,17 @@ def get_guess(question):
 
 def check_guess(computer_opening):
     initial_guess = get_guess('What opening is this? ')
+    opening_name = computer_opening['name'].lower()
+    line_name = computer_opening['line_name'].lower()
 
-    if initial_guess in [computer_opening['name'].lower(), line_name.lower() if line_name else None]:
+    if initial_guess == opening_name or initial_guess == line_name:
+        if 
+
+    else:
+        guesses += 1
+        print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+        if guesses >= 3:
+            print(f'This is the {full_name}.\n')
 
 def play_game(games):
     times_played = 0
