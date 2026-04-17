@@ -40,7 +40,7 @@ for opening_name, variations in openings.items():
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
     openings[opening_name] = common.split(' ')
 
-print(openings["Sicilian: Rossolimo"])
+print(openings["Sicilian: Accelerated Fianchetto"])
 
 
 
