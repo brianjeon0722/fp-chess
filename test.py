@@ -31,7 +31,10 @@ for a in range(20, 100):
 
 for opening_name, variations in all_sicilian_names.items():
     common = os.path.commonprefix(list(variations)).rstrip()
-    all_sicilian_names[opening_name] = common.strip()
+    common = common.strip()
+    if re.search(r'\d+\.$', common):
+        common = re.sub(r'\s*\d+\.$', '', common).strip()
+    all_sicilian_names[opening_name] = common
 
 print(all_sicilian_names["Sicilian: Rossolimo"])
 
