@@ -16,7 +16,7 @@ print(f"Total openings: {len(all_openings)}")
 openings = {}
 
 for a in range(20, 100):
-    for opening in library.find_by_eco(f'C{a}'):
+    for opening in library.find_by_eco(f'B{a}'):
         opening_name = opening.name
         opening_name = opening_name.replace("Sicilian Defense", "Sicilian")
         if opening_name.split(':')[0].strip() != 'Sicilian':
