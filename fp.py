@@ -36,7 +36,7 @@ def check_guess(computer_opening, guesses):
         if line_name in initial_guess:
             return correct(full_name, guesses)  # ← return the result
         elif opening_name in initial_guess:
-            line_guess = get_guess(f'What line of the {opening_name} is this? ')
+            line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ')
             if line_name in line_guess:
                 return correct(full_name, guesses)  # ← return the result
             else:
