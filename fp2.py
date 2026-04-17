@@ -8,7 +8,7 @@ openings = [{
     {
     'name': 'Sicilian',
     'line_name': 'Accelerated Dragon',
-    'moves': ['e4', 'c5', 'Nf3', 'Nc6' 'd4', 'cxd4', 'Nxd4', 'g6']},
+    'moves': ['e4', 'c5', 'Nf3', 'Nc6', 'd4', 'cxd4', 'Nxd4', 'g6']},
     {
     'name': 'Sicilian',
     'line_name': 'Dragon',
@@ -16,7 +16,7 @@ openings = [{
     {
     'name': 'Sicilian',
     'line_name': 'Grand Prix',
-    'moves': ['e4', 'c5', 'Nc3', 'Nc6' 'f4']},
+    'moves': ['e4', 'c5', 'Nc3', 'Nc6', 'f4']},
     {
     'name': 'Ruy Lopez',
     'moves': ['e4', 'e5', 'Nf3', 'Nc6', 'Bb5']},
@@ -39,9 +39,9 @@ def correct(full_name, guesses):
     return True, guesses  # already does this, good
 
 def check_guess(computer_opening, guesses):
-    initial_guess = get_guess('What opening is this? ')
-    opening_name = computer_opening.get('name')
-    line_name = computer_opening.get('line_name')
+    initial_guess = get_guess('What opening is this? ').lower()
+    opening_name = computer_opening.get('name').lower()
+    line_name = computer_opening.get('line_name').lower()
 
     if line_name is None:
         full_name = computer_opening["name"]
