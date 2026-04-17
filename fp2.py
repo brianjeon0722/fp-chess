@@ -51,9 +51,9 @@ def check_guess(computer_opening):
 # Sicilian Accelerated Dragon
 # The Sicilian Accelerated Dragon
 
-Sicilian
+# sicilian
 
-
+# accelerated
 
 
 def play_game(games):
