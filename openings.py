@@ -60,4 +60,4 @@ for opening_name, moves in openings.items():
     }
     openings_list.append(entry)
 
-print(openings_list)
+

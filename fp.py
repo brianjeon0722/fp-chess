@@ -67,8 +67,8 @@ def play_game(games):
         board = chess.Board()
         for move in computer_opening['moves']:
             board.push_san(move)
-        print(board)
-        print()
+            print(board)
+            print()
 
         while not solved and guesses < 3:
             solved, guesses = check_guess(computer_opening, guesses)
