@@ -60,8 +60,6 @@ for opening_name, moves in openings.items():
     }
     openings_list.append(entry)
 
-for i in openings_list:
-    print(i['line_name'])
 
 
 
