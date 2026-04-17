@@ -27,8 +27,8 @@ for a in range(0, 100):
         opening_name = re.sub(r'\s+', ' ', opening_name).strip() # turn any double spaces we created about into a single one
         opening_name = opening_name.strip(':,').strip() # remove trailing , or :
         if opening_name not in openings: # if this is a new opening,
-            openings[opening_name] = set()
-        openings[opening_name].add(opening.moves_str)
+            openings[opening_name] = set() # create a set
+        openings[opening_name].add(opening.moves_str) # add the moves (a string with the moves '1. e4 c5 2. ...')
 
 # CLEAN: remove names that are prefixes of other names (handles Sozin, Prins, Smith-Morra, etc.)
 names = list(openings.keys())
