@@ -28,7 +28,7 @@ for a in range(20, 100):
 
 for name in sorted(all_sicilian_names):
     print(name)
-    # print(all_sicilian_names[name])
+    print(all_sicilian_names[name])
 
 
 
