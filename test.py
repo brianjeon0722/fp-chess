@@ -29,9 +29,6 @@ for a in range(20, 100):
                 openings[opening_name] = set()
             openings[opening_name].add(opening.moves_str)
 
-#{"Sicilian: Rossolimo": ['e4', 'c5', ...],
-# "Sicilian: Kan: [],
-# "Sicilian: Dragon: []}
 
 for opening_name, variations in openings.items():
     common = os.path.commonprefix(list(variations)).rstrip()
@@ -39,6 +36,17 @@ for opening_name, variations in openings.items():
     if re.search(r'\d+\.', common):
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
     openings[opening_name] = common.split(' ')
+
+#{"Sicilian: Rossolimo": ['e4', 'c5', ...],
+# "Sicilian: Kan: [..],
+# "Sicilian: Dragon: [...]}
+
+# [{"name": "Sicilian",
+#   "line_name": "Rossolimo",
+#   "moves": [...]},
+#  {"name": "Sicilian",
+#   "line_name": "Kan",
+#   "moves": [...]}, ...
 
 print(openings["Sicilian: Accelerated Fianchetto"])
 
