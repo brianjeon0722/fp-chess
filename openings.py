@@ -60,8 +60,4 @@ for opening_name, moves in openings.items():
     }
     openings_list.append(entry)
 
-for i in openings_list:
-    if i.get('line_name') == "Grand Prix":
-        print(i.get('moves'))
-
 

@@ -77,4 +77,5 @@ def main():
     games = int(input('How many times would you like to play? ').strip())
     play_game(games)
 
-
+if __name__ == '__main__':
+    main()
