@@ -18,7 +18,7 @@ openings = {}
 openings = {}
 
 for a in range(20, 100):
-    for opening in library.find_by_eco(f'B{a}'):
+    for opening in library.find_by_eco(f'C{a}'):
         opening_name = opening.name
         if opening.name[0:opening.name.find(':')] == 'Sicilian Defense':
             opening_name = opening_name.replace("Sicilian Defense", "Sicilian")
