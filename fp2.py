@@ -26,30 +26,32 @@ openings = [{
     }
 ]
 
-computer_opening = random.choice(openings)
 
-def check_guess(computer_opening, guesses):
-    initial_guess = str(input('What opening is this? ')).lower().strip()
-    line_name = computer_opening.get('line_name')
-    full_name = f'{computer_opening["name"]} {line_name}' if line_name else computer_opening["name"]
+def get_guess(question):
+    return str(input(question)).lower().strip()
 
-    # Correct on first try (full name or line name)
+def check_guess(computer_opening):
+    initial_guess = get_guess('What opening is this? ')
+
     if initial_guess in [computer_opening['name'].lower(), line_name.lower() if line_name else None]:
-        if line_name and initial_guess == computer_opening['name'].lower():
-            line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ')
-            if line_guess == line_name.lower():
-                print(f'Correct! This is the {full_name}.\n')
-                return True, guesses
-        else:
-            print(f'Correct! This is the {full_name}.\n')
-            return True, guesses
 
-    guesses += 1
-    print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
-    if guesses >= 3:
-        print(f'This is the {full_name}.\n')
-    return False, guesses
+def play_game(games):
+    times_played = 0
 
+    while times_played < games:
+        computer_opening = random.choice(openings)
+        print(f'### Game {times_played} ###')
+        board = chess.Board()
+        for move in computer_opening['moves']:
+            board.push_san(move)
+            print(board)
+            print('\n')
+
+
+
+def main():
+    games = int(input('How many times would you like to play? ').strip())
+    play_game(games)
 
 games = int(input('How many times would you like to play? ').strip())
 
