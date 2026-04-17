@@ -55,23 +55,33 @@ def check_guess(computer_opening, guesses):
 
 def play_game(games):
     times_played = 0
+    wins = 0
+    losses = 0
 
     while times_played < games:
         guesses = 0
         solved = False
         computer_opening = random.choice(openings)
 
-        print(f'### Game {times_played + 1} ###')  # ← +1 so it starts at 1
+        print(f'### Game {times_played + 1} ###')
         board = chess.Board()
         for move in computer_opening['moves']:
             board.push_san(move)
-            print(board)
-            print('\n')
+        print(board)
+        print()
 
-        while not solved and guesses < 3:  # keep asking until solved or out of guesses
+        while not solved and guesses < 3:
             solved, guesses = check_guess(computer_opening, guesses)
 
+        if solved:
+            wins += 1
+        else:
+            losses += 1
+
         times_played += 1
+
+    print(f'### Results ###')
+    print(f'You won {wins}/{wins + losses}')
 
 def main():
     games = int(input('How many times would you like to play? ').strip())
