@@ -39,11 +39,12 @@ def check_guess(computer_opening):
         full_name = computer_opening["name"]
         if opening_name in initial_guess:
             print(f'Correct! This is the {full_name}.\n')
-        guesses += 1
-        print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
-        if guesses >= 3:
-            print(f'This is the {full_name}.\n')
-            
+        else:
+            guesses += 1
+            print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+            if guesses >= 3:
+                print(f'This is the {full_name}.\n')
+
     else: # if lines exist
         full_name = f'{computer_opening["name"]} {line_name}'
         if opening_name in initial_guess or line_name in initial_guess:
