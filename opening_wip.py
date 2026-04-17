@@ -20,22 +20,19 @@ openings = {}
 for a in range(0, 100):
     for opening in library.find_by_eco(f'A{a}'):
         opening_name = opening.name
-        if opening.name[0:opening.name.find(':')] == 'Sicilian Defense':
-            opening_name = opening_name.replace("Sicilian Defense", "Sicilian")
-        if opening.name[0:opening.name.find(':')] == 'Sicilian':
-            if re.search(r"[1234567890]", opening_name) != None:
-                opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
-            if re.search(r"[,]", opening_name) != None:
-                opening_name = opening_name[:re.search(r"[,]", opening_name).start()]
-            # CLEAN: remove vs. artifacts
-            if re.search(r'\bvs\.?$', opening_name):
-                opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
-            # CLEAN: collapse slash variants to first name
-            if '/' in opening_name:
-                opening_name = opening_name[:opening_name.find('/')].strip()
-            if opening_name not in openings:
-                openings[opening_name] = set()
-            openings[opening_name].add(opening.moves_str)
+        if re.search(r"[1234567890]", opening_name) != None:
+            opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
+        if re.search(r"[,]", opening_name) != None:
+            opening_name = opening_name[:re.search(r"[,]", opening_name).start()]
+        # CLEAN: remove vs. artifacts
+        if re.search(r'\bvs\.?$', opening_name):
+            opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
+        # CLEAN: collapse slash variants to first name
+        if '/' in opening_name:
+            opening_name = opening_name[:opening_name.find('/')].strip()
+        if opening_name not in openings:
+            openings[opening_name] = set()
+        openings[opening_name].add(opening.moves_str)
 
 # CLEAN: remove names that are prefixes of other names (handles Sozin, Prins, Smith-Morra, etc.)
 names = list(openings.keys())
