@@ -30,7 +30,12 @@ openings = [{
 def get_guess(question):
     return str(input(question)).lower().strip()
 
-def check_guess(computer_opening):
+def correct(full_name):
+    print(f'Correct! This is the {full_name}.\n')
+    return True
+
+
+def check_guess(computer_opening, guesses):
     initial_guess = get_guess('What opening is this? ')
     opening_name = computer_opening['name'].lower()
     line_name = computer_opening['line_name'].lower()
@@ -38,22 +43,28 @@ def check_guess(computer_opening):
     if line_name == None: # if no lines
         full_name = computer_opening["name"]
         if opening_name in initial_guess:
-            print(f'Correct! This is the {full_name}.\n')
+            correct(full_name)
         else:
             guesses += 1
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
             if guesses >= 3:
                 print(f'This is the {full_name}.\n')
+            return False
 
     else: # if lines exist
         full_name = f'{computer_opening["name"]} {line_name}'
         if opening_name in initial_guess or line_name in initial_guess:
             if line_name in initial_guess:
-                print(f'Correct! This is the {full_name}.\n')
+                correct(full_name)
             elif opening_name in initial_guess:
                 line_guess = get_guess(f'What line of the {opening_name} is this? ')
                 if line_name in line_guess:
-                    print(f'Correct! This is the {full_name}.\n')
+                    correct(full_name)
+                else:
+                    guesses += 1
+                print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+                if guesses >= 3:
+                    print(f'This is the {full_name}.\n')
         else:
             guesses += 1
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
