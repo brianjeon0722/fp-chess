@@ -29,6 +29,10 @@ for a in range(20, 100):
                 openings[opening_name] = set()
             openings[opening_name].add(opening.moves_str)
 
+#{"Sicilian: Rossolimo": ['e4', 'c5', ...],
+# "Sicilian: Kan: [],
+# "Sicilian: Dragon: []}
+
 for opening_name, variations in openings.items():
     common = os.path.commonprefix(list(variations)).rstrip()
     common = common.strip()
