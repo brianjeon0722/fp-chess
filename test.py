@@ -33,7 +33,7 @@ for opening_name, variations in all_sicilian_names.items():
     common = os.path.commonprefix(list(variations)).rstrip()
     all_sicilian_names[opening_name] = common.strip()
 
-print(all_sicilian_names["Sicilian: Dragon"])
+print(all_sicilian_names["Sicilian: Grand Prix"])
 
 
 
