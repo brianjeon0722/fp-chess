@@ -35,6 +35,8 @@ def check_guess(computer_opening):
     opening_name = computer_opening['name'].lower()
     line_name = computer_opening['line_name'].lower()
 
+    if line_name == None:
+
     if opening_name in initial_guess or line_name in initial_guess:
         if line_name in initial_guess:
             print(f'Correct! This is the {full_name}.\n')
