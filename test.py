@@ -1,5 +1,6 @@
 from Openix import ChessOpeningsLibrary
 import re
+import os
 
 library = ChessOpeningsLibrary()
 loaded_count = library.load_builtin_openings()
@@ -28,7 +29,11 @@ for a in range(20, 100):
                 all_sicilian_names[opening_name] = set()
             all_sicilian_names[opening_name].add(opening.moves_str)
 
-print(all_sicilian_names["Sicilian: English"])
+for opening_name, variations in all_sicilian_names.items():
+    common = os.path.commonprefix(list(variations)).rstrip()
+    all_sicilian_names[opening_name] = common.strip()
+
+print(all_sicilian_names["Sicilian: Dragon"])
 
 
 
