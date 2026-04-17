@@ -48,7 +48,7 @@ def check_guess(computer_opening, guesses):
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
             if guesses >= 3:
                 print(f'This is the {full_name}.\n')
-            return False
+            return False, guesses
 
     else: # if lines exist
         full_name = f'{computer_opening["name"]} {line_name}'
@@ -64,13 +64,13 @@ def check_guess(computer_opening, guesses):
                 print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
                 if guesses >= 3:
                     print(f'This is the {full_name}.\n')
-                return False
+                return False, guesses
         else:
             guesses += 1
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
             if guesses >= 3:
                 print(f'This is the {full_name}.\n')
-            return False
+            return False, guesses
 
 
 
