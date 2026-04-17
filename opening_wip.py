@@ -27,7 +27,6 @@ for a in range(0, 100):
         # CLEAN: remove vs. artifacts
         if re.search(r'\bvs\.?$', opening_name):
             opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
-        # CLEAN: collapse slash variants to first name
         if '/' in opening_name:
             opening_name = opening_name[:opening_name.find('/')].strip()
         generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Gambit Accepted', 'Gambit Declined', 'Gambit']
