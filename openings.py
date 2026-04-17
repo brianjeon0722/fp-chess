@@ -31,6 +31,9 @@ for a in range(20, 100):
         # CLEAN: collapse slash variants to first name
         if '/' in opening_name:
             opening_name = opening_name[:opening_name.find('/')].strip()
+        generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Gambit', 'Deferred'] # different ways of saying an opening
+        for term in generic_terms: # for each of these
+            opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip() # remove them
         if opening_name not in openings:
             openings[opening_name] = set()
         openings[opening_name].add(opening.moves_str)
