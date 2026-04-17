@@ -25,8 +25,8 @@ for a in range(20, 100):
             if re.search(r"[,]", opening_name) != None:
                 opening_name = opening_name[:re.search(r"[,]", opening_name).start()]
             if opening_name not in all_sicilian_names:
-                all_sicilian_names[opening_name] = []
-            all_sicilian_names[opening_name].append(opening.moves_str)
+                all_sicilian_names[opening_name] = set()
+            all_sicilian_names[opening_name].add(opening.moves_str)
 
 print(all_sicilian_names["Sicilian: English"])
 
