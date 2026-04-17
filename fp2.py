@@ -36,13 +36,25 @@ def check_guess(computer_opening):
     line_name = computer_opening['line_name'].lower()
 
     if initial_guess == opening_name or initial_guess == line_name:
-        if 
-
+        if initial_guess == line_name:
+            print(f'Correct! This is the {full_name}.\n')
+        if initial_guess ==
     else:
         guesses += 1
         print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
         if guesses >= 3:
             print(f'This is the {full_name}.\n')
+
+
+
+
+# Sicilian Accelerated Dragon
+# The Sicilian Accelerated Dragon
+
+Sicilian
+
+
+
 
 def play_game(games):
     times_played = 0
