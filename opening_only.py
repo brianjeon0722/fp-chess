@@ -19,6 +19,10 @@ for a in range(0, 100):
             opening_name = opening_name.split(':')[0].strip()
         if ',' in opening_name:
             opening_name = opening_name.split(',')[0].strip()
+        if 'with' in opening_name:
+            opening_name = opening_name.split('with')[0].strip()
+        if ' - ' in opening_name:
+            opening_name = opening_name.split(' - ')[0].strip()
 
         # Remove generic terms
         for term in generic_terms:
