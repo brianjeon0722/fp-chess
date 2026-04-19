@@ -11,7 +11,7 @@ openings = {}
 generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Gambit', 'Game']
 
 for a in range(0, 100):
-    for opening in library.find_by_eco(f'B{a}'):
+    for opening in library.find_by_eco(f'A{a}'):
         opening_name = opening.name
 
         # Extract first few words before ':' or ',' (whichever comes first)
@@ -23,6 +23,8 @@ for a in range(0, 100):
             opening_name = opening_name.split('with')[0].strip()
         if ' - ' in opening_name:
             opening_name = opening_name.split(' - ')[0].strip()
+        if re.search(r"[1234567890]", opening_name) != None: # if there are numbers
+            opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1] # remove everything after the numbers
 
         # Remove generic terms
         for term in generic_terms:
