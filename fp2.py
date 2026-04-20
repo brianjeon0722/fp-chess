@@ -18,7 +18,7 @@ def correct(full_name, guesses):
 def check_guess(computer_opening, guesses):
     initial_guess = get_guess('What opening is this? ').lower()
     opening_name = computer_opening.get('name').lower()
-    line_name = computer_opening.get('line_name').lower()
+    line_name = computer_opening.get('line_name')
 
     if line_name is None:
         full_name = computer_opening["name"]
