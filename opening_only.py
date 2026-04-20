@@ -15,6 +15,9 @@ for a in range(0, 100):
         opening_name = opening.name
         original_name = opening_name  # Store for debugging
 
+        if opening_name.startswith('talian'):
+            opening_name = 'I' + opening_name
+
         if ':' in opening_name:
             opening_name = opening_name.split(':')[0].strip()
         if ',' in opening_name:
