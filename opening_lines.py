@@ -116,7 +116,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_filtered = {}
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 10 and line_name != None:
+    if len(moves) >= 10 and line_name != None and len(moves) >= 3:
         common = os.path.commonprefix(list(moves)).rstrip()
         common = common.strip()
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
@@ -131,6 +131,6 @@ for (name, line_name), moves in openings_filtered.items():
         'moves': moves
     })
 
-for i in openings_list:
-    print(i['name'])
-    print(i['line_name'])
+# for i in openings_list:
+#     print(i['name'])
+#     print(i['line_name'])
