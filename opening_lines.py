@@ -48,7 +48,7 @@ for a in range(0, 100):
 openings_filtered = {}
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 3:
+    if len(moves) >= 5 & :
         common = os.path.commonprefix(list(moves)).rstrip()
         common = common.strip()
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
