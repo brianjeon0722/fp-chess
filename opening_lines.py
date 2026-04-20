@@ -21,15 +21,10 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             if re.search(r"[1234567890]", opening_name):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
-            if "," in opening_name:
-                opening_name = opening_name[:opening_name.find(",")]
+            opening_name = opening_name.split(",", 1)[0]
 
             # remove 'The ' at the beginning
             opening_name = re.sub(r'^\s*[Tt]he\s+', '', opening_name).strip()
-
-            # remove generic terms
-            for term in generic_terms:
-                opening_name = re.sub(rf'\b{term}\b', '', opening_name, flags=re.IGNORECASE).strip()
 
             # clean up extra spaces
             opening_name = re.sub(r'\s+', ' ', opening_name).strip()
