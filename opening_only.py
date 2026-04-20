@@ -13,6 +13,7 @@ generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack
 for a in range(0, 100):
     for opening in library.find_by_eco(f'C{a}'):
         opening_name = opening.name
+        original_name = opening_name  # Store for debugging
 
         if ':' in opening_name:
             opening_name = opening_name.split(':')[0].strip()
@@ -30,7 +31,6 @@ for a in range(0, 100):
 
         # Remove generic terms - do this AFTER removing "The"
         for term in generic_terms:
-            # Use word boundaries to ensure we only remove complete words
             opening_name = re.sub(rf'\b{term}\b', '', opening_name, flags=re.IGNORECASE).strip()
 
         # Clean up extra spaces
@@ -38,6 +38,10 @@ for a in range(0, 100):
 
         # Final cleanup - remove any leading non-letter characters
         opening_name = re.sub(r'^[^a-zA-Z]+', '', opening_name).strip()
+
+        # DEBUG: Print if it contains "talian"
+        if 'talian' in opening_name.lower():
+            print(f"DEBUG - Original: '{original_name}' -> Cleaned: '{opening_name}'")
 
         # Skip if opening name is empty or too short after cleaning
         if not opening_name or len(opening_name) < 2:
@@ -51,18 +55,11 @@ for a in range(0, 100):
 # Find common prefix for each opening
 final_openings = {}
 for opening_name, variations in openings.items():
-    # Find common prefix across all variations
     common = os.path.commonprefix(list(variations)).strip()
-
-    # Remove trailing incomplete move numbers or periods
     common = re.sub(r'\s*\d+\.\s*$', '', common).strip()
-
-    # Extract only the actual moves (remove move numbers)
     moves = re.findall(r'(?:\d+\.\s*)?([a-hNBRQKO][\w\-+=#]*)', common)
 
-    # Only keep if there are 2 or more moves
     if len(moves) >= 2:
-        # Check if this move sequence already exists
         moves_tuple = tuple(moves)
         if moves_tuple not in [tuple(v) for v in final_openings.values()]:
             final_openings[opening_name] = moves
@@ -71,5 +68,4 @@ for opening_name, variations in openings.items():
 for opening_name, moves in sorted(final_openings.items()):
     print(f"Opening: {opening_name}")
     print(f"Moves: {moves}")
-    print(f"Moves string: {' '.join(moves)}")
     print()
