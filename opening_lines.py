@@ -122,8 +122,6 @@ for (name, line_name), moves in grouped.items():
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
         openings_filtered[(name, line_name)] = common.split()
 
-
-
 openings_list = []
 
 for (name, line_name), moves in openings_filtered.items():
