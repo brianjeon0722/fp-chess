@@ -1,7 +1,6 @@
 from Openix import ChessOpeningsLibrary
 import re
 import os
-import unicodedata
 
 library = ChessOpeningsLibrary()
 loaded_count = library.load_builtin_openings()
@@ -46,20 +45,41 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # Remove "Old" from the beginning
             opening_name = re.sub(r'^\s*Old\s+', '', opening_name, flags=re.IGNORECASE).strip()
 
-            # Normalize unicode characters (ü -> u, é -> e, etc.)
-            opening_name = unicodedata.normalize('NFD', opening_name)
-            opening_name = ''.join(char for char in opening_name if unicodedata.category(char) != 'Mn')
+            # Normalize special characters to their ASCII equivalents
+            # This handles ü->ue, é->e, etc.
+            char_replacements = {
+                'ü': 'ue',
+                'Ü': 'Ue',
+                'ö': 'oe',
+                'Ö': 'Oe',
+                'ä': 'ae',
+                'Ä': 'Ae',
+                'é': 'e',
+                'É': 'E',
+                'è': 'e',
+                'È': 'E',
+                'á': 'a',
+                'Á': 'A',
+                'í': 'i',
+                'Í': 'I',
+                'ó': 'o',
+                'Ó': 'O',
+                'ú': 'u',
+                'Ú': 'U',
+            }
+            for char, replacement in char_replacements.items():
+                opening_name = opening_name.replace(char, replacement)
 
             # Expand abbreviations
             abbreviations = {
-                r'^QGD$': "Queen's Declined",
-                r'^QGA$': "Queen's Accepted",
-                r'^KGD$': "King's Declined",
-                r'^KGA$': "King's Accepted",
-                r"^Queen's Accepted$": "Queen's Accepted",
-                r"^Queen's Declined$": "Queen's Declined",
-                r"^King's Accepted$": "King's Accepted",
-                r"^King's Declined$": "King's Declined"
+                r'^QGD$': "Queen's Gambit Declined",
+                r'^QGA$': "Queen's Gambit Accepted",
+                r'^KGD$': "King's Gambit Declined",
+                r'^KGA$': "King's Gambit Accepted",
+                r"^Queen's Accepted$": "Queen's Gambit Accepted",
+                r"^Queen's Declined$": "Queen's Gambit Declined",
+                r"^King's Accepted$": "King's Gambit Accepted",
+                r"^King's Declined$": "King's Gambit Declined"
             }
 
             for pattern, replacement in abbreviations.items():
