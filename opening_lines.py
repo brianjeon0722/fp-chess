@@ -24,11 +24,72 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             if "," in opening_name:
                 opening_name = opening_name[:opening_name.find(",")]
 
+            # remove 'The ' at the beginning
+            opening_name = re.sub(r'^\s*[Tt]he\s+', '', opening_name).strip()
+
+            # remove generic terms
+            for term in generic_terms:
+                opening_name = re.sub(rf'\b{term}\b', '', opening_name, flags=re.IGNORECASE).strip()
+
+            # clean up extra spaces
+            opening_name = re.sub(r'\s+', ' ', opening_name).strip()
+
+            # remove any leading non-letter characters
+            opening_name = re.sub(r'^[^a-zA-Z]+', '', opening_name).strip()
+
+            # remove "Old" from the beginning
+            opening_name = re.sub(r'^\s*Old\s+', '', opening_name, flags=re.IGNORECASE).strip()
+
+            # remove trailing possessive "'s"
+            opening_name = re.sub(r"'s$", "", opening_name, flags=re.IGNORECASE).strip()
+
             if re.search(r'\bvs\.?$', opening_name):
                 opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
 
             if '/' in opening_name:
                 opening_name = opening_name[:opening_name.find('/')].strip()
+
+            # normalize special characters to their ASCII equivalents
+            # openings like gruenfeld or reti
+            char_replacements = {
+                'ü': 'ue',
+                'Ü': 'Ue',
+                'ö': 'oe',
+                'Ö': 'Oe',
+                'ä': 'ae',
+                'Ä': 'Ae',
+                'é': 'e',
+                'É': 'E',
+                'è': 'e',
+                'È': 'E',
+                'á': 'a',
+                'Á': 'A',
+                'í': 'i',
+                'Í': 'I',
+                'ó': 'o',
+                'Ó': 'O',
+                'ú': 'u',
+                'Ú': 'U',
+            }
+            for char, replacement in char_replacements.items():
+                opening_name = opening_name.replace(char, replacement)
+
+            # expand abbreviations
+            abbreviations = {
+                r'^QGD$': "Queen's Gambit Declined",
+                r'^QGA$': "Queen's Gambit Accepted",
+                r'^KGD$': "King's Gambit Declined",
+                r'^KGA$': "King's Gambit Accepted",
+                r"^Queen's Accepted$": "Queen's Gambit Accepted",
+                r"^Queen's Declined$": "Queen's Gambit Declined",
+                r"^King's Accepted$": "King's Gambit Accepted",
+                r"^King's Declined$": "King's Gambit Declined"
+            }
+
+            for pattern, replacement in abbreviations.items():
+                if re.match(pattern, opening_name, flags=re.IGNORECASE):
+                    opening_name = replacement
+                    break
 
             generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack']
             for term in generic_terms:
