@@ -38,11 +38,10 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # remove trailing possessive "'s"
             opening_name = re.sub(r"'s$", "", opening_name, flags=re.IGNORECASE).strip()
 
-            if re.search(r'\bvs\.?$', opening_name):
-                opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
+            # remove trailing vs. or vs
+            opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
 
-            if '/' in opening_name:
-                opening_name = opening_name[:opening_name.find('/')].strip()
+            opening_name = opening_name.split('/', 1)[0].strip()
 
             # normalize special characters to their ASCII equivalents
             # openings like gruenfeld or reti
@@ -66,6 +65,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                 'ú': 'u',
                 'Ú': 'U',
             }
+
             for char, replacement in char_replacements.items():
                 opening_name = opening_name.replace(char, replacement)
 
@@ -90,12 +90,20 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             for term in generic_terms:
                 opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
 
+            # remove trailing spaces
             opening_name = re.sub(r'\s+', ' ', opening_name).strip()
+
+            # remove trailing :
             opening_name = opening_name.strip(':,').strip()
 
+            # split by : or -
             parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
             name = parts[0].strip()
-            line_name = parts[1].strip() if len(parts) > 1 else None
+
+            if len(parts) > 1:
+                line_name = parts[1].strip()
+            else:
+                line_name = None
 
             key = (name, line_name)
 
@@ -108,7 +116,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_filtered = {}
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 5 and line_name != None:
+    if len(moves) >= 10 and line_name != None:
         common = os.path.commonprefix(list(moves)).rstrip()
         common = common.strip()
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
