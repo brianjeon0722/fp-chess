@@ -7,7 +7,7 @@ loaded_count = library.load_builtin_openings()
 
 openings = {}
 
-# Generic terms to remove
+# generic terms to remove
 generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Gambit', 'Game']
 
 for letter in ['A', 'B', 'C', 'D', 'E']:
@@ -29,27 +29,27 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             if re.search(r"[1234567890]", opening_name) != None:
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
-            # Remove "The " at the beginning
+            # remove 'The ' at the beginning
             opening_name = re.sub(r'^\s*[Tt]he\s+', '', opening_name).strip()
 
-            # Remove generic terms
+            # remove generic terms
             for term in generic_terms:
                 opening_name = re.sub(rf'\b{term}\b', '', opening_name, flags=re.IGNORECASE).strip()
 
-            # Clean up extra spaces
+            # clean up extra spaces
             opening_name = re.sub(r'\s+', ' ', opening_name).strip()
 
             # remove any leading non-letter characters
             opening_name = re.sub(r'^[^a-zA-Z]+', '', opening_name).strip()
 
-            # Remove "Old" from the beginning
+            # remove "Old" from the beginning
             opening_name = re.sub(r'^\s*Old\s+', '', opening_name, flags=re.IGNORECASE).strip()
 
             # remove trailing possessive "'s"
             opening_name = re.sub(r"'s$", "", opening_name, flags=re.IGNORECASE).strip()
 
-            # Normalize special characters to their ASCII equivalents
-            # This handles ü->ue, é->e, etc.
+            # normalize special characters to their ASCII equivalents
+            # openings like gruenfeld or reti
             char_replacements = {
                 'ü': 'ue',
                 'Ü': 'Ue',
@@ -73,7 +73,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             for char, replacement in char_replacements.items():
                 opening_name = opening_name.replace(char, replacement)
 
-            # Expand abbreviations
+            # expand abbreviations
             abbreviations = {
                 r'^QGD$': "Queen's Gambit Declined",
                 r'^QGA$': "Queen's Gambit Accepted",
