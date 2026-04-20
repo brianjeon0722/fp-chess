@@ -107,8 +107,9 @@ for opening_name, moves_list in openings.items():
 filtered_openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
 
 
-# For each opening, find the shortest move string and convert to list
-final_openings = {}
+# Build final list in the requested format
+openings = []
+
 for opening_name, moves_list in filtered_openings.items():
     # Find the shortest move string
     shortest_moves_str = min(moves_list, key=len)
@@ -121,29 +122,32 @@ for opening_name, moves_list in filtered_openings.items():
 
     # Only keep if there are 2 or more moves
     if len(moves) >= 2:
-        final_openings[opening_name] = moves
+        openings.append({
+            'name': opening_name,
+            'moves': moves
+        })
 
 # Remove openings that are just longer versions of shorter openings
 openings_to_remove = set()
-for name1, moves1 in final_openings.items():
-    for name2, moves2 in final_openings.items():
-        if name1 != name2:
-            # Check if name1 starts with name2 (e.g., "Benko Accepted" starts with "Benko")
+
+for i, opening1 in enumerate(openings):
+    for j, opening2 in enumerate(openings):
+        if i != j:
+            name1, moves1 = opening1['name'], opening1['moves']
+            name2, moves2 = opening2['name'], opening2['moves']
+
+            # Check if opening1 is a longer named version of opening2
             if name1.startswith(name2 + ' '):
-                # Check if moves2 is a prefix of moves1 (shorter base moves)
+                # Check if moves2 is a prefix of moves1
                 if len(moves2) < len(moves1) and moves1[:len(moves2)] == moves2:
-                    openings_to_remove.add(name1)
-                    
+                    openings_to_remove.add(i)
 
-# Remove the identified openings
-for name in openings_to_remove:
-    del final_openings[name]
+# Keep only the cleaned openings
+openings = [opening for i, opening in enumerate(openings) if i not in openings_to_remove]
 
+# Sort alphabetically by name
+openings = sorted(openings, key=lambda x: x['name'])
 
 # Print results
-for opening_name, moves in sorted(final_openings.items()):
-    print(f"Opening: {opening_name}")
-    print(f"Count: {len(filtered_openings[opening_name])} variations")
-    print(f"Moves: {moves}")
-    print(f"Moves string: {' '.join(moves)}")
-    print()
+for opening in openings:
+    print(opening)
