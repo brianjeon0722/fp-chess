@@ -95,14 +95,14 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                 openings[opening_name] = []
             openings[opening_name].append(opening.moves_str)
 
-# Collapse similar names after abbreviation expansion
+# collapse similar names after abbreviation expansion
 collapsed_openings = {}
 for opening_name, moves_list in openings.items():
     if opening_name not in collapsed_openings:
         collapsed_openings[opening_name] = []
     collapsed_openings[opening_name].extend(moves_list)
 
-# Filter: only keep openings that appear 10+ times
+# filter: only keep openings that appear 10+ times
 filtered_openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
 
 
@@ -110,23 +110,24 @@ filtered_openings = {name: moves_list for name, moves_list in collapsed_openings
 openings = []
 
 for opening_name, moves_list in filtered_openings.items():
-    # Find the shortest move string
+
+    # find the shortest move string
     shortest_moves_str = min(moves_list, key=len)
 
-    # Remove trailing incomplete move numbers
+    # remove trailing incomplete move numbers
     shortest_moves_str = re.sub(r'\s*\d+\.\s*$', '', shortest_moves_str).strip()
 
-    # Extract only the actual moves (remove move numbers)
+    # extract only the actual moves (remove move numbers)
     moves = re.findall(r'(?:\d+\.\s*)?([a-hNBRQKO][\w\-+=#]*)', shortest_moves_str)
 
-    # Only keep if there are 2 or more moves
+    # only keep if there are 2 or more moves
     if len(moves) >= 2:
         openings.append({
             'name': opening_name,
             'moves': moves
         })
 
-# Remove openings that are just longer versions of shorter openings
+# remove openings that are just longer versions of shorter openings
 openings_to_remove = set()
 
 for i, opening1 in enumerate(openings):
@@ -141,9 +142,9 @@ for i, opening1 in enumerate(openings):
                 if len(moves2) < len(moves1) and moves1[:len(moves2)] == moves2:
                     openings_to_remove.add(i)
 
-# Keep only the cleaned openings
+# keep only the cleaned openings
 openings = [opening for i, opening in enumerate(openings) if i not in openings_to_remove]
 
-# Sort alphabetically by name
+# sort alphabetically by name
 openings = sorted(openings, key=lambda x: x['name'])
 
