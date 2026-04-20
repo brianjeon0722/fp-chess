@@ -39,11 +39,14 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # Clean up extra spaces
             opening_name = re.sub(r'\s+', ' ', opening_name).strip()
 
-            # Final cleanup - remove any leading non-letter characters
+            # remove any leading non-letter characters
             opening_name = re.sub(r'^[^a-zA-Z]+', '', opening_name).strip()
 
             # Remove "Old" from the beginning
             opening_name = re.sub(r'^\s*Old\s+', '', opening_name, flags=re.IGNORECASE).strip()
+
+            # remove trailing possessive "'s"
+            opening_name = re.sub(r"'s$", "", opening_name, flags=re.IGNORECASE).strip()
 
             # Normalize special characters to their ASCII equivalents
             # This handles ü->ue, é->e, etc.

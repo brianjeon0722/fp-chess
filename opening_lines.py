@@ -11,7 +11,7 @@ openings = {}
 
 
 for a in range(0, 100):
-    for opening in library.find_by_eco(f'A{a}'):
+    for opening in library.find_by_eco(f'B{a}'):
         opening_name = opening.name
         if re.search(r"[1234567890]", opening_name) != None: # if there are numbers
             opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1] # remove everything after the numbers
