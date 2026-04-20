@@ -106,10 +106,6 @@ for opening_name, moves_list in openings.items():
 # Filter: only keep openings that appear 10+ times
 filtered_openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
 
-print(f"Total unique opening names: {len(openings)}")
-print(f"After collapsing: {len(collapsed_openings)}")
-print(f"Opening names with 10+ variations: {len(filtered_openings)}")
-print()
 
 # For each opening, find the shortest move string and convert to list
 final_openings = {}
@@ -137,13 +133,12 @@ for name1, moves1 in final_openings.items():
                 # Check if moves2 is a prefix of moves1 (shorter base moves)
                 if len(moves2) < len(moves1) and moves1[:len(moves2)] == moves2:
                     openings_to_remove.add(name1)
-                    print(f"Removing '{name1}' (prefix of '{name2}')")
+                    
 
 # Remove the identified openings
 for name in openings_to_remove:
     del final_openings[name]
 
-print(f"\nFinal openings after removing prefixes: {len(final_openings)}\n")
 
 # Print results
 for opening_name, moves in sorted(final_openings.items()):
