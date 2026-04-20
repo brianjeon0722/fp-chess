@@ -1,31 +1,8 @@
 import chess
 import random
+from opening_only import openings
 
-openings = [{
-    'name': 'Sicilian',
-    'line_name': 'Smith-Morra',
-    'moves': ['e4', 'c5', 'd4', 'cxd4', 'c3']},
-    {
-    'name': 'Sicilian',
-    'line_name': 'Accelerated Dragon',
-    'moves': ['e4', 'c5', 'Nf3', 'Nc6', 'd4', 'cxd4', 'Nxd4', 'g6']},
-    {
-    'name': 'Sicilian',
-    'line_name': 'Dragon',
-    'moves': ['e4', 'c5', 'Nf3', 'd6', 'd4', 'cxd4', 'Nxd4', 'Nf6', 'Nc3', 'g6']},
-    {
-    'name': 'Sicilian',
-    'line_name': 'Grand Prix',
-    'moves': ['e4', 'c5', 'Nc3', 'Nc6', 'f4']},
-    {
-    'name': 'Ruy Lopez',
-    'moves': ['e4', 'e5', 'Nf3', 'Nc6', 'Bb5']},
-    {
-    'name': 'Scotch',
-    'moves': ['e4', 'e5', 'Nf3', 'Nc6', 'd4']
-    }
-]
-
+openings = openings
 
 def get_guess(question):
     return str(input(question)).lower().strip()
@@ -33,6 +10,10 @@ def get_guess(question):
 def correct(full_name, guesses):
     print(f'Correct! This is the {full_name}.\n')
     return True, guesses
+
+def correct(full_name, guesses):
+    print(f'Correct! This is the {full_name}.\n')
+    return True, guesses  # already does this, good
 
 def check_guess(computer_opening, guesses):
     initial_guess = get_guess('What opening is this? ').lower()
@@ -74,23 +55,33 @@ def check_guess(computer_opening, guesses):
 
 def play_game(games):
     times_played = 0
+    wins = 0
+    losses = 0
 
     while times_played < games:
         guesses = 0
         solved = False
         computer_opening = random.choice(openings)
 
-        print(f'### Game {times_played + 1} ###')  # ← +1 so it starts at 1
+        print(f'### Game {times_played + 1} ###')
         board = chess.Board()
         for move in computer_opening['moves']:
             board.push_san(move)
             print(board)
-            print('\n')
+            print()
 
-        while not solved and guesses < 3:  # keep asking until solved or out of guesses
+        while not solved and guesses < 3:
             solved, guesses = check_guess(computer_opening, guesses)
 
+        if solved:
+            wins += 1
+        else:
+            losses += 1
+
         times_played += 1
+
+    print(f'### Results ###')
+    print(f'You won {wins}/{wins + losses}')
 
 def main():
     games = int(input('How many times would you like to play? ').strip())
