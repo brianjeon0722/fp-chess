@@ -9,46 +9,50 @@ all_openings = library.get_all_openings()
 
 grouped = {}
 
-for a in range(0, 100):
-    for opening in library.find_by_eco(f'B{a}'):
-        opening_name = opening.name
+for letter in ['A', 'B', 'C', 'D', 'E']:
+    for num in range(0, 100):
+        for opening in library.find_by_eco(f'{letter}{num}'):
 
-        if re.search(r"[1234567890]", opening_name):
-            opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
+            opening_name = opening.name
 
-        if "," in opening_name:
-            opening_name = opening_name[:opening_name.find(",")]
+            if opening_name.startswith('talian'):
+                opening_name = 'I' + opening_name
 
-        if re.search(r'\bvs\.?$', opening_name):
-            opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
+            if re.search(r"[1234567890]", opening_name):
+                opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
-        if '/' in opening_name:
-            opening_name = opening_name[:opening_name.find('/')].strip()
+            if "," in opening_name:
+                opening_name = opening_name[:opening_name.find(",")]
 
-        generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack']
-        for term in generic_terms:
-            opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
+            if re.search(r'\bvs\.?$', opening_name):
+                opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
 
-        opening_name = re.sub(r'\s+', ' ', opening_name).strip()
-        opening_name = opening_name.strip(':,').strip()
+            if '/' in opening_name:
+                opening_name = opening_name[:opening_name.find('/')].strip()
 
-        parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
-        name = parts[0].strip()
-        line_name = parts[1].strip() if len(parts) > 1 else None
+            generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack']
+            for term in generic_terms:
+                opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
 
-        key = (name, line_name)
+            opening_name = re.sub(r'\s+', ' ', opening_name).strip()
+            opening_name = opening_name.strip(':,').strip()
 
-        if key not in grouped:
-            grouped[key] = set()
+            parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
+            name = parts[0].strip()
+            line_name = parts[1].strip() if len(parts) > 1 else None
 
-        grouped[key].add(opening.moves_str)
+            key = (name, line_name)
 
+            if key not in grouped:
+                grouped[key] = set()
+
+            grouped[key].add(opening.moves_str)
 
 
 openings_filtered = {}
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 5 & :
+    if len(moves) >= 5 and line_name != None:
         common = os.path.commonprefix(list(moves)).rstrip()
         common = common.strip()
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
