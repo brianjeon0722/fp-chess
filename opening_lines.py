@@ -60,7 +60,7 @@ for opening_name, moves in openings_filtered.items():
 openings_list = []
 
 for opening_name, moves in openings_filtered.items():
-    parts = re.split(r': | - ', opening_name, maxsplit=1)
+    parts = re.split(r'\s*:\s*|\s*-\s*', opening_name, maxsplit=1)
     entry = {
         'name': parts[0],
         'line_name': parts[1] if len(parts) > 1 else None,
