@@ -22,21 +22,25 @@ for a in range(0, 100):
             opening_name = opening_name.split('with')[0].strip()
         if ' - ' in opening_name:
             opening_name = opening_name.split(' - ')[0].strip()
-        if re.search(r"[1234567890]", opening_name) != None: # if there are numbers
-            opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1] # remove everything after the numbers
+        if re.search(r"[1234567890]", opening_name) != None:
+            opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
-        # Remove "The " at the beginning if present
-        opening_name = re.sub(r'^\s*The\s+', '', opening_name, flags=re.IGNORECASE).strip()
+        # Remove "The " at the beginning (more aggressively)
+        opening_name = re.sub(r'^\s*[Tt]he\s+', '', opening_name).strip()
 
-        # Remove generic terms (only complete words)
+        # Remove generic terms - do this AFTER removing "The"
         for term in generic_terms:
+            # Use word boundaries to ensure we only remove complete words
             opening_name = re.sub(rf'\b{term}\b', '', opening_name, flags=re.IGNORECASE).strip()
 
         # Clean up extra spaces
         opening_name = re.sub(r'\s+', ' ', opening_name).strip()
 
-        # Skip if opening name is empty after cleaning
-        if not opening_name:
+        # Final cleanup - remove any leading non-letter characters
+        opening_name = re.sub(r'^[^a-zA-Z]+', '', opening_name).strip()
+
+        # Skip if opening name is empty or too short after cleaning
+        if not opening_name or len(opening_name) < 2:
             continue
 
         # Add to dictionary
