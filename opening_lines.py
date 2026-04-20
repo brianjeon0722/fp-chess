@@ -44,6 +44,9 @@ for name in names:
     if any(other != name and other.startswith(name) for other in names):
         del openings[name]
 
+# filter: only keep openings that appear 10+ times
+openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
+
 for opening_name, variations in openings.items():
     common = os.path.commonprefix(list(variations)).rstrip()
     common = common.strip()
