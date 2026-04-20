@@ -90,10 +90,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                     opening_name = replacement
                     break
 
-            # Skip if opening name is empty or too short after cleaning
-            if not opening_name or len(opening_name) < 2:
-                continue
-
             # Add to dictionary - store the move string
             if opening_name not in openings:
                 openings[opening_name] = []
