@@ -14,7 +14,6 @@ for a in range(0, 100):
     for opening in library.find_by_eco(f'C{a}'):
         opening_name = opening.name
 
-        # Extract first few words before ':' or ',' (whichever comes first)
         if ':' in opening_name:
             opening_name = opening_name.split(':')[0].strip()
         if ',' in opening_name:
@@ -26,12 +25,19 @@ for a in range(0, 100):
         if re.search(r"[1234567890]", opening_name) != None: # if there are numbers
             opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1] # remove everything after the numbers
 
-        # Remove generic terms
+        # Remove "The " at the beginning if present
+        opening_name = re.sub(r'^\s*The\s+', '', opening_name, flags=re.IGNORECASE).strip()
+
+        # Remove generic terms (only complete words)
         for term in generic_terms:
             opening_name = re.sub(rf'\b{term}\b', '', opening_name, flags=re.IGNORECASE).strip()
 
         # Clean up extra spaces
         opening_name = re.sub(r'\s+', ' ', opening_name).strip()
+
+        # Skip if opening name is empty after cleaning
+        if not opening_name:
+            continue
 
         # Add to dictionary
         if opening_name not in openings:
@@ -48,7 +54,6 @@ for opening_name, variations in openings.items():
     common = re.sub(r'\s*\d+\.\s*$', '', common).strip()
 
     # Extract only the actual moves (remove move numbers)
-    # Pattern: remove "1." "2." etc. and keep only the moves
     moves = re.findall(r'(?:\d+\.\s*)?([a-hNBRQKO][\w\-+=#]*)', common)
 
     # Only keep if there are 2 or more moves
