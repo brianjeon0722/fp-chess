@@ -1,6 +1,7 @@
 from Openix import ChessOpeningsLibrary
 import re
 import os
+import unicodedata
 
 library = ChessOpeningsLibrary()
 loaded_count = library.load_builtin_openings()
@@ -44,6 +45,10 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
             # Remove "Old" from the beginning
             opening_name = re.sub(r'^\s*Old\s+', '', opening_name, flags=re.IGNORECASE).strip()
+
+            # Normalize unicode characters (ü -> u, é -> e, etc.)
+            opening_name = unicodedata.normalize('NFD', opening_name)
+            opening_name = ''.join(char for char in opening_name if unicodedata.category(char) != 'Mn')
 
             # Expand abbreviations
             abbreviations = {
@@ -103,7 +108,6 @@ for opening_name, moves_list in filtered_openings.items():
         final_openings[opening_name] = moves
 
 # Remove openings that are just longer versions of shorter openings
-# For example, "Benko Accepted" should be removed if "Benko" exists with fewer moves
 openings_to_remove = set()
 for name1, moves1 in final_openings.items():
     for name2, moves2 in final_openings.items():
