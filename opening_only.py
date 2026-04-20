@@ -42,6 +42,26 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # Final cleanup - remove any leading non-letter characters
             opening_name = re.sub(r'^[^a-zA-Z]+', '', opening_name).strip()
 
+            # Remove "Old" from the beginning
+            opening_name = re.sub(r'^\s*Old\s+', '', opening_name, flags=re.IGNORECASE).strip()
+
+            # Expand abbreviations
+            abbreviations = {
+                r'^QGD$': "Queen's Declined",
+                r'^QGA$': "Queen's Accepted",
+                r'^KGD$': "King's Declined",
+                r'^KGA$': "King's Accepted",
+                r"^Queen's Accepted$": "Queen's Accepted",
+                r"^Queen's Declined$": "Queen's Declined",
+                r"^King's Accepted$": "King's Accepted",
+                r"^King's Declined$": "King's Declined"
+            }
+
+            for pattern, replacement in abbreviations.items():
+                if re.match(pattern, opening_name, flags=re.IGNORECASE):
+                    opening_name = replacement
+                    break
+
             # Skip if opening name is empty or too short after cleaning
             if not opening_name or len(opening_name) < 2:
                 continue
@@ -51,10 +71,19 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                 openings[opening_name] = []
             openings[opening_name].append(opening.moves_str)
 
+# Collapse similar names after abbreviation expansion
+# This merges variations that became identical after expansion
+collapsed_openings = {}
+for opening_name, moves_list in openings.items():
+    if opening_name not in collapsed_openings:
+        collapsed_openings[opening_name] = []
+    collapsed_openings[opening_name].extend(moves_list)
+
 # Filter: only keep openings that appear 10+ times
-filtered_openings = {name: moves_list for name, moves_list in openings.items() if len(moves_list) >= 10}
+filtered_openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
 
 print(f"Total unique opening names: {len(openings)}")
+print(f"After collapsing: {len(collapsed_openings)}")
 print(f"Opening names with 10+ variations: {len(filtered_openings)}")
 print()
 
