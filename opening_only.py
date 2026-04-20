@@ -72,7 +72,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             openings[opening_name].append(opening.moves_str)
 
 # Collapse similar names after abbreviation expansion
-# This merges variations that became identical after expansion
 collapsed_openings = {}
 for opening_name, moves_list in openings.items():
     if opening_name not in collapsed_openings:
@@ -102,6 +101,25 @@ for opening_name, moves_list in filtered_openings.items():
     # Only keep if there are 2 or more moves
     if len(moves) >= 2:
         final_openings[opening_name] = moves
+
+# Remove openings that are just longer versions of shorter openings
+# For example, "Benko Accepted" should be removed if "Benko" exists with fewer moves
+openings_to_remove = set()
+for name1, moves1 in final_openings.items():
+    for name2, moves2 in final_openings.items():
+        if name1 != name2:
+            # Check if name1 starts with name2 (e.g., "Benko Accepted" starts with "Benko")
+            if name1.startswith(name2 + ' '):
+                # Check if moves2 is a prefix of moves1 (shorter base moves)
+                if len(moves2) < len(moves1) and moves1[:len(moves2)] == moves2:
+                    openings_to_remove.add(name1)
+                    print(f"Removing '{name1}' (prefix of '{name2}')")
+
+# Remove the identified openings
+for name in openings_to_remove:
+    del final_openings[name]
+
+print(f"\nFinal openings after removing prefixes: {len(final_openings)}\n")
 
 # Print results
 for opening_name, moves in sorted(final_openings.items()):
