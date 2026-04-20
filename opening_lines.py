@@ -45,6 +45,9 @@ for name in names:
         del openings[name]
 
 # filter: only keep openings that appear 10+ times
+for openings, moves in openings.items():
+    if len(moves) >= 3:
+        
 openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
 
 for opening_name, variations in openings.items():
