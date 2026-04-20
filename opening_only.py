@@ -151,6 +151,3 @@ openings = [opening for i, opening in enumerate(openings) if i not in openings_t
 # Sort alphabetically by name
 openings = sorted(openings, key=lambda x: x['name'])
 
-# Print results
-for opening in openings:
-    print(opening)
