@@ -32,7 +32,7 @@ for a in range(0, 100):
         opening_name = re.sub(r'\s+', ' ', opening_name).strip()
         opening_name = opening_name.strip(':,').strip()
 
-        parts = re.split(r'\s*:\s*|\s*-\s*', opening_name, maxsplit=1)
+        parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
         name = parts[0].strip()
         line_name = parts[1].strip() if len(parts) > 1 else None
 
