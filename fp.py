@@ -1,6 +1,6 @@
 import chess
 import random
-from openings import openings_list
+from opening_lines import openings_list
 
 openings = openings_list
 
