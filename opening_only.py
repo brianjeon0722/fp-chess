@@ -95,18 +95,15 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                 openings[opening_name] = []
             openings[opening_name].append(opening.moves_str)
 
-# collapse similar names after abbreviation expansion
-collapsed_openings = {}
-for opening_name, moves_list in openings.items():
-    if opening_name not in collapsed_openings:
-        collapsed_openings[opening_name] = []
-    collapsed_openings[opening_name].extend(moves_list)
 
-# filter: only keep openings that appear 10+ times
-filtered_openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
+# only keep openings that appear 10+ times
+filtered_openings = {}
 
+for name, moves_list in openings.items():
+    if len(moves_list) >= 15:
+        filtered_openings[name] = moves_list
 
-# Build final list in the requested format
+# build final list in format
 openings = []
 
 for opening_name, moves_list in filtered_openings.items():
