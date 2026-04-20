@@ -11,7 +11,7 @@ openings = {}
 generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Gambit', 'Game']
 
 for a in range(0, 100):
-    for opening in library.find_by_eco(f'A{a}'):
+    for opening in library.find_by_eco(f'C{a}'):
         opening_name = opening.name
 
         # Extract first few words before ':' or ',' (whichever comes first)
