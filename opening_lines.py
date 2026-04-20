@@ -44,21 +44,22 @@ for name in names:
     if any(other != name and other.startswith(name) for other in names):
         del openings[name]
 
+openings_filtered = {}
+
 # filter: only keep openings that appear 10+ times
 for openings, moves in openings.items():
     if len(moves) >= 3:
-        
-openings = {name: moves_list for name, moves_list in collapsed_openings.items() if len(moves_list) >= 10}
+        openings_filtered[openings] = moves
 
-for opening_name, variations in openings.items():
-    common = os.path.commonprefix(list(variations)).rstrip()
+for opening_name, moves in openings_filtered.items():
+    common = os.path.commonprefix(list(moves)).rstrip()
     common = common.strip()
     common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
-    openings[opening_name] = common.split(' ')
+    openings_filtered[opening_name] = common.split(' ')
 
 openings_list = []
 
-for opening_name, moves in openings.items():
+for opening_name, moves in openings_filtered.items():
     parts = opening_name.split(': ', 1)
     entry = {
         'name': parts[0],
