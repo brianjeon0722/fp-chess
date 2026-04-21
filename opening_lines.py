@@ -87,6 +87,22 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
             name = parts[0].strip()
 
+            abbreviations = {
+                r'^QGD$': "Queen's Gambit Declined",
+                r'^QGA$': "Queen's Gambit Accepted",
+                r'^KGD$': "King's Gambit Declined",
+                r'^KGA$': "King's Gambit Accepted",
+                r"^Queen's Accepted$": "Queen's Gambit Accepted",
+                r"^Queen's Declined$": "Queen's Gambit Declined",
+                r"^King's Accepted$": "King's Gambit Accepted",
+                r"^King's Declined$": "King's Gambit Declined"
+            }
+
+            for pattern, replacement in abbreviations.items():
+                if re.match(pattern, opening_name, flags=re.IGNORECASE):
+                    name = replacement
+                    break
+
             # if there is a : or -
             if len(parts) > 1:
                 line_name = parts[1].strip()
@@ -103,22 +119,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
             # add into new set
             grouped[key].add(opening.moves_str)
-
-abbreviations = {
-                r'^QGD$': "Queen's Gambit Declined",
-                r'^QGA$': "Queen's Gambit Accepted",
-                r'^KGD$': "King's Gambit Declined",
-                r'^KGA$': "King's Gambit Accepted",
-                r"^Queen's Accepted$": "Queen's Gambit Accepted",
-                r"^Queen's Declined$": "Queen's Gambit Declined",
-                r"^King's Accepted$": "King's Gambit Accepted",
-                r"^King's Declined$": "King's Gambit Declined"
-            }
-
-for pattern, replacement in abbreviations.items():
-    if re.match(pattern, opening_name, flags=re.IGNORECASE):
-        opening_name = replacement
-        break
 
 openings_list = []
 
