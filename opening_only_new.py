@@ -17,16 +17,14 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             if opening_name.startswith('talian'): # fix a minor typo i found
                 opening_name = 'I' + opening_name
 
-            opening_name = re.sub(r'\s*(:|/|\s-\s).*$', '', opening_name).strip()
-            
+            # AI helped me with writing the regex and using re library
+            # remove everything after the first ',' ' - ' ':' or '/'
+            opening_name = re.sub(r'\s*(,|/|:|\s-\s).*$', '', opening_name).strip()
+
             # remove numbers +
             if re.search(r"[1234567890]", opening_name):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
-            # remove everything after the first ,
-            opening_name = opening_name.split(",", 1)[0]
-
-            # AI helped me with writing the regex and using re library
             # remove 'The ' at the beginning
             opening_name = re.sub(r'^\s*[Tt]he\s+', '', opening_name).strip()
 
@@ -44,9 +42,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
             # remove trailing vs. or vs
             opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
-
-            # remove everything after first /
-            opening_name = opening_name.split('/', 1)[0].strip()
 
             # normalize special characters to their ASCII equivalents
             # openings like gruenfeld or reti
