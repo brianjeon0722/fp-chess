@@ -129,9 +129,11 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
 for name, moves in grouped.items():
     if name == "Sicilian":
-        prefix = common_move_prefix(list(moves))
-        print(f"Common prefix: {prefix}")
-        print(f"Length: {len(prefix)}")
+        for m in moves:
+            cleaned = re.sub(r'\s*\d+\.\s*', '', m).strip()
+            tokens = cleaned.split()
+            if not tokens or tokens[0] != 'e4':
+                print(f"ROGUE: {repr(m)}")
         break
 
 openings_list = []
