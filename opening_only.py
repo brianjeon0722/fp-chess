@@ -115,6 +115,9 @@ for name, moves in grouped.items():
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
         if len(common.split()) >= 3:
+            for item in openings_list:
+                if common.split() in item['moves']:
+                    
             # transforms
             openings_list.append({
             'name': name,
