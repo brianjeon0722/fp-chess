@@ -114,10 +114,11 @@ for name, moves in grouped.items():
         # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
-        # transforms
-        openings_list.append({
-        'name': name,
-        'moves': common.split()
+        if len(common.split()) >= 2:
+            # transforms
+            openings_list.append({
+            'name': name,
+            'moves': common.split()
     })
 
 # for i in openings_list:
