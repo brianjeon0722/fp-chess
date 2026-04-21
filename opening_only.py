@@ -109,7 +109,12 @@ for name, moves in grouped.items():
     if len(moves) >= 4:
 
         # AI helped me use os.path
-        common = os.path.commonprefix(list(moves)).rstrip()
+        normalized = []
+        for s in moves:
+            cleaned = re.sub(r'\s*\d+\.\s*', '', s)
+            tokens = cleaned.split()
+            normalized.append(" ".join(tokens))
+        common = os.path.commonprefix(normalized)
 
         # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
@@ -127,16 +132,6 @@ for name, moves in grouped.items():
                 'name': name,
                 'moves': common.split()})
 
-# for i in openings_list:
-#     print(i['name'])
+for i in openings_list:
+    print(i['name'])
 
-for name, moves in grouped.items():
-    if name in ['Sicilian', 'Caro-Kann']:
-        print("NAME:", name)
-        print("COUNT:", len(moves))
-        common = os.path.commonprefix(list(moves)).rstrip()
-        print("RAW COMMON:", repr(common))
-        cleaned = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
-        print("CLEANED COMMON:", repr(cleaned))
-        print("TOKENS:", cleaned.split())
-        print()
