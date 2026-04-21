@@ -106,7 +106,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_list = []
 
 for name, moves in grouped.items():
-    if len(moves) >= 15:
+    if len(moves) >= 10:
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
@@ -127,5 +127,5 @@ for name, moves in grouped.items():
                 'name': name,
                 'moves': common.split()})
 
-# for i in openings_list:
-#     print(i['name'])
+for i in openings_list:
+    print(i['name'])
