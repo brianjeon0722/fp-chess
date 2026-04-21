@@ -89,7 +89,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                     break
 
             # remove generic terms
-            generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack']
+            generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Game']
             for term in generic_terms:
                 opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
 
@@ -119,7 +119,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
             # add into new set
             grouped[key].add(opening.moves_str)
-            
+
 
 openings_list = []
 

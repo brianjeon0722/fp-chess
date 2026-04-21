@@ -86,7 +86,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                     break
 
             # remove generic terms
-            generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack']
+            generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Game']
             for term in generic_terms:
                 opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
 
@@ -106,7 +106,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_list = []
 
 for name, moves in grouped.items():
-    if len(moves) >= 5:
+    if len(moves) >= 10:
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
