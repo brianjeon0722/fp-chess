@@ -23,6 +23,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # remove everything after the first ,
             opening_name = opening_name.split(",", 1)[0]
 
+            # AI helped me with writing the regex and using re library
             # remove 'The ' at the beginning
             opening_name = re.sub(r'^\s*[Tt]he\s+', '', opening_name).strip()
 
@@ -41,6 +42,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # remove trailing vs. or vs
             opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
 
+            # remove everything after first /
             opening_name = opening_name.split('/', 1)[0].strip()
 
             # normalize special characters to their ASCII equivalents
@@ -69,7 +71,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             for char, replacement in char_replacements.items():
                 opening_name = opening_name.replace(char, replacement)
 
-            # expand abbreviations
             abbreviations = {
                 r'^QGD$': "Queen's Gambit Declined",
                 r'^QGA$': "Queen's Gambit Accepted",
@@ -116,15 +117,20 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_filtered = {}
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 10 and line_name != None and len(moves) >= 3:
+    if len(moves) >= 10 and line_name != None:
+
+        # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
+
+        # remove trailing spaces
         common = common.strip()
+
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
         openings_filtered[(name, line_name)] = common.split()
 
 openings_list = []
 
-for (name, line_name), moves in openings_filtered.items():
+for name, line_name, moves in openings_filtered.items():
     openings_list.append({
         'name': name,
         'line_name': line_name,
