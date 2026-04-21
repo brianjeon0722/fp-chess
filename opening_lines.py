@@ -132,12 +132,18 @@ for (name, line_name), moves in grouped.items():
         # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
-        # transforms
-        openings_list.append({
-        'name': name,
-        'line_name': line_name,
-        'moves': common.split()
-    })
+        if len(common.split()) >= 3:
+            already = False
+            for item in openings_list:
+                if item['moves'] == common.split():
+                    already = True
+                    break
+
+            if already == False:
+                # transforms
+                openings_list.append({
+                'name': name,
+                'moves': common.split()})
 
 # for i in openings_list:
 #     print(i['name'])
