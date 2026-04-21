@@ -5,6 +5,30 @@ import os
 library = ChessOpeningsLibrary()
 load = library.load_builtin_openings()
 
+def common_move_prefix(move_strings):
+    split_lists = []
+
+    for s in move_strings:
+        cleaned = re.sub(r'\s*\d+\.\s*', '', s).strip()
+        tokens = cleaned.split()
+        split_lists.append(tokens)
+
+    if len(split_lists) == 0:
+        return []
+
+    prefix = split_lists[0]
+
+    for moves in split_lists[1:]:
+        i = 0
+        while i < len(prefix) and i < len(moves) and prefix[i] == moves[i]:
+            i += 1
+        prefix = prefix[:i]
+
+        if len(prefix) == 0:
+            break
+
+    return prefix
+
 grouped = {}
 
 # eco libraries are A1-100 to E1-100
@@ -108,16 +132,10 @@ openings_list = []
 for name, moves in grouped.items():
     if len(moves) >= 4:
 
-        # AI helped me use os.path
-        normalized = []
-        for s in moves:
-            cleaned = re.sub(r'\s*\d+\.\s*', '', s)
-            tokens = cleaned.split()
-            normalized.append(" ".join(tokens))
-        common = os.path.commonprefix(normalized)
+        common_moves = common_move_prefix(list(moves))
 
-        # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
-        common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
+        # # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
+        # common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
         if len(common.split()) >= 2:
             already = False
