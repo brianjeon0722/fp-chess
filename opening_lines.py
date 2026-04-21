@@ -138,6 +138,6 @@ for (name, line_name), moves in grouped.items():
             'moves': common.split()
         })
 
-for i in openings_list:
-    print(i['name'])
-    print(i['line_name'])
+# for i in openings_list:
+#     print(i['name'])
+#     print(i['line_name'])
