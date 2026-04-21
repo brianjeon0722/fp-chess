@@ -106,7 +106,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_list = []
 
 for name, moves in grouped.items():
-    if len(moves) >= 10:
+    if len(moves) >= 4:
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
@@ -114,7 +114,7 @@ for name, moves in grouped.items():
         # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
-        if len(common.split()) >= 3:
+        if len(common.split()) >= 2:
             already = False
             for item in openings_list:
                 if item['moves'] == common.split():
