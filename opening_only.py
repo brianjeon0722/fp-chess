@@ -12,9 +12,9 @@ load = library.load_builtin_openings()
 def common_move_prefix(move_strings):
     split_lists = []
     for s in move_strings:
-        cleaned = re.sub(r'\s*\d+\.\s*', '', s).strip()
-        tokens = cleaned.split()
-        split_lists.append(tokens)
+        # Extract moves using regex to avoid concatenation
+        moves = re.findall(r'(?:\d+\.\s*)?([a-hNBRQKO][\w\-+=#]*)', s)
+        split_lists.append(moves)
 
     if not split_lists:
         return []
