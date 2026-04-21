@@ -11,10 +11,6 @@ def correct(full_name, guesses):
     print(f'Correct! This is the {full_name}.\n')
     return True, guesses
 
-def correct(full_name, guesses):
-    print(f'Correct! This is the {full_name}.\n')
-    return True, guesses  # already does this, good
-
 def check_guess(computer_opening, guesses):
     initial_guess = get_guess('What opening is this? ').lower()
     opening_name = computer_opening.get('name').lower()
@@ -96,4 +92,4 @@ if __name__ == '__main__':
 
 # what's next:
 # hints throughout (going from free response to ABCD)
-# 
+#

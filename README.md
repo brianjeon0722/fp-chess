@@ -4,4 +4,4 @@
 
 # Instructions for running the code: Install the chess library, re library, and os library. Run python3 fp_openiing.py to play the easy version. Run python3 fp_lines.py to play the hard version. No need for any other API keys or hosting.
 
-# External contributors: ChatGPT helped understand the libraries (chess, re, and os) and debug those unique errors. ChatGPT also helped format the regex since I wasn't 100% with all the formatting. 
+# External contributors: ChatGPT helped understand the libraries (chess, re, and os) and debug those unique errors. ChatGPT also helped format the regex since I wasn't 100% with all the formatting. These portions are noted in the .py documents explicitly. ChatGPT also gave me the idea of returning tuples with False or True + the number of guesses rather than only False or True from check_guess() and correct().

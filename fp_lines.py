@@ -9,11 +9,7 @@ def get_guess(question):
 
 def correct(full_name, guesses):
     print(f'Correct! This is the {full_name}.\n')
-    return True, guesses
-
-def correct(full_name, guesses):
-    print(f'Correct! This is the {full_name}.\n')
-    return True, guesses  # already does this, good
+    return True, guesses # thanks Chat for this idea
 
 def check_guess(computer_opening, guesses):
     initial_guess = get_guess('What opening is this? ').lower()
@@ -29,7 +25,7 @@ def check_guess(computer_opening, guesses):
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
             if guesses >= 3:
                 print(f'This is the {full_name}.\n')
-            return False, guesses
+            return False, guesses # thanks Chat for this idea
 
     else:
         full_name = f'{computer_opening["name"]} {computer_opening["line_name"]}'
@@ -44,13 +40,13 @@ def check_guess(computer_opening, guesses):
                 print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
                 if guesses >= 3:
                     print(f'This is the {full_name}.\n')
-                return False, guesses
+                return False, guesses # thanks Chat for this idea
         else:
             guesses += 1
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
             if guesses >= 3:
                 print(f'This is the {full_name}.\n')
-            return False, guesses
+            return False, guesses # thanks Chat for this idea
 
 
 def play_game(games):
