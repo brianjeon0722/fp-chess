@@ -3,24 +3,24 @@ import re
 import os
 
 library = ChessOpeningsLibrary()
-loaded_count = library.load_builtin_openings()
-
-all_openings = library.get_all_openings()
 
 grouped = {}
 
+# eco libraries are A1-100 to E1-100
 for letter in ['A', 'B', 'C', 'D', 'E']:
     for num in range(0, 100):
         for opening in library.find_by_eco(f'{letter}{num}'):
 
-            opening_name = opening.name
+            opening_name = opening.name # class for an opening
 
-            if opening_name.startswith('talian'):
+            if opening_name.startswith('talian'): # fix a minor typo i found
                 opening_name = 'I' + opening_name
 
+            # remove numbers +
             if re.search(r"[1234567890]", opening_name):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
+            # remove everything after the first ,
             opening_name = opening_name.split(",", 1)[0]
 
             # remove 'The ' at the beginning
