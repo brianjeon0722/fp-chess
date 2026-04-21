@@ -96,6 +96,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # remove trailing :
             opening_name = opening_name.strip(':,').strip()
 
+            # if this opening is new, create new set
             if opening_name not in grouped:
                 grouped[opening_name] = set()
 
@@ -104,8 +105,8 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
 openings_list = []
 
-for (name, line_name), moves in grouped.items():
-    if len(moves) >= 5 and line_name != None:
+for name, moves in grouped.items():
+    if len(moves) >= 5:
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
@@ -116,10 +117,8 @@ for (name, line_name), moves in grouped.items():
         # transforms
         openings_list.append({
         'name': name,
-        'line_name': line_name,
         'moves': common.split()
     })
 
 for i in openings_list:
     print(i['name'])
-    print(i['line_name'])
