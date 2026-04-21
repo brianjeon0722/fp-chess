@@ -99,7 +99,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             }
 
             for pattern, replacement in abbreviations.items():
-                if re.match(pattern, opening_name, flags=re.IGNORECASE):
+                if re.match(pattern, name, flags=re.IGNORECASE):
                     name = replacement
                     break
 
@@ -123,7 +123,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_list = []
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 20 and line_name != None and line_name != '':
+    if len(moves) >= 15 and line_name != None and line_name != '':
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
