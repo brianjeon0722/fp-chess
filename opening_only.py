@@ -127,12 +127,12 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # add into new set
             grouped[opening_name].add(opening.moves_str)
 
-debug_name = "Sicilian"
-print(f"\n=== DEBUG: entries containing '{debug_name}' ===")
 for name, moves in grouped.items():
-    if debug_name.lower() in name.lower():
-        print(f"  Name: '{name}' | Variants: {len(moves)}")
-
+    if name == "Sicilian":
+        prefix = common_move_prefix(list(moves))
+        print(f"Common prefix: {prefix}")
+        print(f"Length: {len(prefix)}")
+        break
 
 openings_list = []
 
