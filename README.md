@@ -9,4 +9,4 @@
 # What's next: 1. Hint mode where if you guess the word 'hint' it'll give you 4 options to choose from. These options for hard mode will only give you hints on the opening or variation depending on where you are. 2. Combining fp_opening.py with fp_lines.py into 1 script where it asks you first whether you want to play opening or opening + variation mode then how many times you want to play. 3. Toggling more explicit difficulty for each opening or opening + variation mode. There is currently a minimum count for how many times an opening or variation must be in the eco library before I use it. You will be able to toggle this number between 10 20 or 30 for hard, medium, or easy.
 
 # One problem I encountered: identical names for openings due to shortening names, identical move orders due to shortening moves
-# Ex: 
+# Ex: Scotch Game, Scotch Opening, Scotch
