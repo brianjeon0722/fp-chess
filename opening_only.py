@@ -137,10 +137,10 @@ for name, moves in grouped.items():
         # # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
         # common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
-        if len(common.split()) >= 2:
+        if len(common_moves) >= 2:
             already = False
             for item in openings_list:
-                if item['moves'] == common.split():
+                if item['moves'] == common_moves:
                     already = True
                     break
 
@@ -148,7 +148,7 @@ for name, moves in grouped.items():
                 # transforms
                 openings_list.append({
                 'name': name,
-                'moves': common.split()})
+                'moves': common_moves})
 
 for i in openings_list:
     print(i['name'])
