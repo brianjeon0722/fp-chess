@@ -140,7 +140,7 @@ for name, moves in grouped.items():
 openings_list = []
 
 for name, moves in grouped.items():
-    if len(moves) >= 2:
+    if len(moves) >= 10:
 
         common_moves = common_move_prefix(list(moves))
 
