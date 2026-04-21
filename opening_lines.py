@@ -133,18 +133,12 @@ for (name, line_name), moves in grouped.items():
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
         if len(common.split()) >= 3:
-            already = False
-            for item in openings_list:
-                if item['moves'] == common.split():
-                    already = True
-                    break
+            openings_list.append({
+            'name': name,
+            'line_name': line_name,
+            'moves': common.split()
+        })
 
-            if already == False:
-                # transforms
-                openings_list.append({
-                'name': name,
-                'moves': common.split()})
-
-# for i in openings_list:
-#     print(i['name'])
-#     print(i['line_name'])
+for i in openings_list:
+    print(i['name'])
+    print(i['line_name'])
