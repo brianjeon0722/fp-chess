@@ -127,6 +127,13 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # add into new set
             grouped[opening_name].add(opening.moves_str)
 
+debug_name = "Sicilian"
+print(f"\n=== DEBUG: entries containing '{debug_name}' ===")
+for name, moves in grouped.items():
+    if debug_name.lower() in name.lower():
+        print(f"  Name: '{name}' | Variants: {len(moves)}")
+
+
 openings_list = []
 
 for name, moves in grouped.items():
@@ -150,6 +157,6 @@ for name, moves in grouped.items():
                 'name': name,
                 'moves': common_moves})
 
-for i in openings_list:
-    print(i['name'])
+# for i in openings_list:
+#     print(i['name'])
 
