@@ -17,6 +17,8 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             if opening_name.startswith('talian'): # fix a minor typo i found
                 opening_name = 'I' + opening_name
 
+            opening_name = re.sub(r'\s*(:|/|\s-\s).*$', '', opening_name).strip()
+            
             # remove numbers +
             if re.search(r"[1234567890]", opening_name):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
