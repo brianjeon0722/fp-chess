@@ -5,29 +5,30 @@ import os
 library = ChessOpeningsLibrary()
 load = library.load_builtin_openings()
 
+from collections import Counter
+
 def common_move_prefix(move_strings):
     split_lists = []
-
     for s in move_strings:
         cleaned = re.sub(r'\s*\d+\.\s*', '', s).strip()
         tokens = cleaned.split()
         split_lists.append(tokens)
 
-    if len(split_lists) == 0:
+    if not split_lists:
         return []
 
-    prefix = split_lists[0]
+    result = []
+    max_len = max(len(m) for m in split_lists)
 
-    for moves in split_lists[1:]:
-        i = 0
-        while i < len(prefix) and i < len(moves) and prefix[i] == moves[i]:
-            i += 1
-        prefix = prefix[:i]
-
-        if len(prefix) == 0:
+    for i in range(max_len):
+        candidates = [m[i] for m in split_lists if i < len(m)]
+        most_common, count = Counter(candidates).most_common(1)[0]
+        if count / len(split_lists) >= 0.8:
+            result.append(most_common)
+        else:
             break
 
-    return prefix
+    return result
 
 grouped = {}
 
@@ -159,6 +160,6 @@ for name, moves in grouped.items():
                 'name': name,
                 'moves': common_moves})
 
-# for i in openings_list:
-#     print(i['name'])
+for i in openings_list:
+    print(i['name'])
 
