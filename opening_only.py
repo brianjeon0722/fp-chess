@@ -7,6 +7,8 @@ library = ChessOpeningsLibrary()
 load = library.load_builtin_openings()
 
 # thank you claude for this function
+# tldr: this function essentially finds the collection of prefix strings that are shared by 80% of the list of strings
+# ex: 'e4 c5 d1' 'e4 c5 d2' 'e4 c2 d1' --> 'e4 c5' but only if its 80% of the list etc etc
 def common_move_prefix(move_strings):
     split_lists = []
     for s in move_strings:
