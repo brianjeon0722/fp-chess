@@ -162,6 +162,6 @@ for name, moves in grouped.items():
                 'name': name,
                 'moves': common_moves})
 
-for i in openings_list:
-    print(i['name'])
+# for i in openings_list:
+#     print(i['name'])
 
