@@ -1,12 +1,12 @@
 from Openix import ChessOpeningsLibrary
 import re
 import os
+from collections import Counter
 
 library = ChessOpeningsLibrary()
 load = library.load_builtin_openings()
 
-from collections import Counter
-
+# thank you claude for this function
 def common_move_prefix(move_strings):
     split_lists = []
     for s in move_strings:
