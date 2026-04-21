@@ -48,7 +48,7 @@ def check_guess(computer_opening, guesses):
                 if guesses >= 3:
                     print(f'This is the {full_name}.\n')
                 return False, guesses
-            
+
         else:
             guesses += 1
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
@@ -93,3 +93,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# what's next:
+# hints throughout (going from free response to ABCD)
+# 

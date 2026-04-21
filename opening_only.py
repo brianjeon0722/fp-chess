@@ -69,6 +69,17 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             for char, replacement in char_replacements.items():
                 opening_name = opening_name.replace(char, replacement)
 
+            # remove generic terms
+            generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Game']
+            for term in generic_terms:
+                opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
+
+            # remove trailing spaces
+            opening_name = re.sub(r'\s+', ' ', opening_name).strip()
+
+            # remove trailing :
+            opening_name = opening_name.strip(':,').strip()
+
             abbreviations = {
                 r'^QGD$': "Queen's Gambit Declined",
                 r'^QGA$': "Queen's Gambit Accepted",
@@ -84,17 +95,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                 if re.match(pattern, opening_name, flags=re.IGNORECASE):
                     opening_name = replacement
                     break
-
-            # remove generic terms
-            generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack', 'Game']
-            for term in generic_terms:
-                opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
-
-            # remove trailing spaces
-            opening_name = re.sub(r'\s+', ' ', opening_name).strip()
-
-            # remove trailing :
-            opening_name = opening_name.strip(':,').strip()
 
             # if this opening is new, create new set
             if opening_name not in grouped:
