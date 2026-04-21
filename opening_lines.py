@@ -3,6 +3,7 @@ import re
 import os
 
 library = ChessOpeningsLibrary()
+load = library.load_builtin_openings()
 
 grouped = {}
 
@@ -118,12 +119,12 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
             # add into new set
             grouped[key].add(opening.moves_str)
-
+            
 
 openings_list = []
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 10 and line_name != None:
+    if len(moves) >= 5 and line_name != None:
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
