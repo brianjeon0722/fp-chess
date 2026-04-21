@@ -114,29 +114,24 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             grouped[key].add(opening.moves_str)
 
 
-openings_filtered = {}
+openings_list = []
 
-for (name, line_name), moves in grouped.items():
+for name, line_name, moves in grouped.items():
     if len(moves) >= 10 and line_name != None:
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
 
-        # remove trailing spaces
-        common = common.strip()
-
+        # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
         common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
-        openings_filtered[(name, line_name)] = common.split()
 
-openings_list = []
-
-for name, line_name, moves in openings_filtered.items():
-    openings_list.append({
+        # transforms
+        openings_list.append({
         'name': name,
         'line_name': line_name,
-        'moves': moves
+        'moves': common.split()
     })
 
-# for i in openings_list:
-#     print(i['name'])
-#     print(i['line_name'])
+for i in openings_list:
+    print(i['name'])
+    print(i['line_name'])
