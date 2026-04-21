@@ -72,6 +72,10 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             for char, replacement in char_replacements.items():
                 opening_name = opening_name.replace(char, replacement)
 
+            # split by : or -
+            parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
+            name = parts[0].strip()
+
             abbreviations = {
                 r'^QGD$': "Queen's Gambit Declined",
                 r'^QGA$': "Queen's Gambit Accepted",
@@ -99,9 +103,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # remove trailing :
             opening_name = opening_name.strip(':,').strip()
 
-            # split by : or -
-            parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
-            name = parts[0].strip()
 
             # if there is a : or -
             if len(parts) > 1:
@@ -124,7 +125,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_list = []
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 15 and line_name != None:
+    if len(moves) >= 20 and line_name != None and line_name != '':
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
