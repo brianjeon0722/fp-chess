@@ -130,24 +130,12 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # add into new set
             grouped[opening_name].add(opening.moves_str)
 
-for name, moves in grouped.items():
-    if name == "Sicilian":
-        for m in moves:
-            cleaned = re.sub(r'\s*\d+\.\s*', '', m).strip()
-            tokens = cleaned.split()
-            if not tokens or tokens[0] != 'e4':
-                print(f"ROGUE: {repr(m)}")
-        break
-
 openings_list = []
 
 for name, moves in grouped.items():
     if len(moves) >= 10:
 
         common_moves = common_move_prefix(list(moves))
-
-        # # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
-        # common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
 
         if len(common_moves) >= 2:
             already = False
