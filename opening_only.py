@@ -117,7 +117,8 @@ for name, moves in grouped.items():
         if len(common.split()) >= 3:
             for item in openings_list:
                 if common.split() in item['moves']:
-                    
+                    pass
+            
             # transforms
             openings_list.append({
             'name': name,
