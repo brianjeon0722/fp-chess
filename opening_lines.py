@@ -87,6 +87,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                     opening_name = replacement
                     break
 
+            # remove generic terms
             generic_terms = ['Variation', 'Defense', 'Defence', 'System', 'Opening', 'Attack']
             for term in generic_terms:
                 opening_name = re.sub(rf'\b{term}\b', '', opening_name).strip()
@@ -101,22 +102,27 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
             name = parts[0].strip()
 
+            # if there is a : or -
             if len(parts) > 1:
                 line_name = parts[1].strip()
+            # if there is no : or -
             else:
                 line_name = None
 
+            # opening name + line name
             key = (name, line_name)
 
+            # if new, create a new set
             if key not in grouped:
                 grouped[key] = set()
 
+            # add into new set
             grouped[key].add(opening.moves_str)
 
 
 openings_list = []
 
-for name, line_name, moves in grouped.items():
+for (name, line_name), moves in grouped.items():
     if len(moves) >= 10 and line_name != None:
 
         # AI helped me use os.path
