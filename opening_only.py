@@ -130,7 +130,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_list = []
 
 for name, moves in grouped.items():
-    if len(moves) >= 4:
+    if len(moves) >= 2:
 
         common_moves = common_move_prefix(list(moves))
 
