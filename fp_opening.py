@@ -1,8 +1,8 @@
 import chess
 import random
-from opening_only import openings
+from opening_only import openings_list
 
-openings = openings
+openings = openings_list
 
 def get_guess(question):
     return str(input(question)).lower().strip()
