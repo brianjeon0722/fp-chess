@@ -3,6 +3,31 @@ import random
 from opening_lines import openings_list
 from opening_only import opening_only
 
+def start():
+    try:
+        games = int(input('How many times would you like to play? ').strip())
+    except ValueError:
+        print("Please input a valid number.")
+
+    while True:
+        try:
+            mode = int(input('Would you like to only guess openings or also variations? Type "1" for openings only and type "2" for openings and variations.').strip())
+
+            if mode not in (1, 2):
+                print('Please enter 1 or 2!')
+                continue
+            break
+
+        except ValueError:
+            print('Please input a valid number.')
+
+    if mode == 1:
+        opening = opening_only
+    else:
+        opening = openings_list
+
+    return games, opening
+
 def get_guess(question):
     return str(input(question)).lower().strip()
 
@@ -48,7 +73,7 @@ def check_guess(computer_opening, guesses):
             return False, guesses # thanks Chat for this idea
 
 
-def play_game(games):
+def play_game(games, opening):
     times_played = 0
     wins = 0
     losses = 0
@@ -56,7 +81,7 @@ def play_game(games):
     while times_played < games:
         guesses = 0
         solved = False
-        computer_opening = random.choice(openings)
+        computer_opening = random.choice(opening)
 
         print(f'### Game {times_played + 1} ###')
         board = chess.Board()
@@ -79,29 +104,9 @@ def play_game(games):
     print(f'You won {wins}/{wins + losses}')
 
 def main():
+    games, opening = start()
 
-    try:
-        games = int(input('How many times would you like to play? ').strip())
-    except ValueError:
-        print("Please input a valid number.")
-
-    while True:
-        try:
-            mode = int(input('Would you like to only guess openings or also variations? Type "1" for openings only and type "2" for openings and variations.').strip())
-
-            if mode not in (1, 2):
-                print('Please enter 1 or 2!')
-                continue
-            break
-
-        except ValueError:
-            print('Please input a valid number.')
-
-    if mode == 1:
-        opening = opening_only
-    else:
-        openings = openings_list
-    play_game(games)
+    play_game(games, opening)
 
 if __name__ == '__main__':
     main()
