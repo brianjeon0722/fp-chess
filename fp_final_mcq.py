@@ -102,7 +102,9 @@ def mcq(computer_opening, opening, need_line):
             while len(all_options < 5):
                 all_options.append(random.choice(opening))
 
-        
+        for i in range(3):
+            options.append(all_options[random.choice(range(1, len(all_options)))])
+
 
 
 
