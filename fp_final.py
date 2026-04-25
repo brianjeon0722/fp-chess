@@ -1,13 +1,15 @@
 import chess
 import random
 from opening_lines import openings_list
-from opening_only import opening_only
+from opening_only import openings_only
 
 def start():
-    try:
-        games = int(input('How many times would you like to play? ').strip())
-    except ValueError:
-        print("Please input a valid number.")
+    while True:
+        try:
+            games = int(input('How many times would you like to play? ').strip())
+            break
+        except ValueError:
+            print("Please input a valid number.")
 
     while True:
         try:
@@ -22,7 +24,7 @@ def start():
             print('Please input a valid number.')
 
     if mode == 1:
-        opening = opening_only
+        opening = openings_only
     else:
         opening = openings_list
 
@@ -105,7 +107,6 @@ def play_game(games, opening):
 
 def main():
     games, opening = start()
-
     play_game(games, opening)
 
 if __name__ == '__main__':
