@@ -90,6 +90,13 @@ def mcq(computer_opening, opening, need_line):
             choice = random.choice(opening)
             if choice not in options:
                 options.append(choice)
+    else:
+        all_options = []
+
+        for openings in opening:
+            if openings['name'] == computer_opening['name']:
+                
+
 
 
 
