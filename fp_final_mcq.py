@@ -85,7 +85,11 @@ def check_guess(computer_opening, guesses):
 def mcq(computer_opening, opening, need_line):
     if need_line == 0:
         options = [computer_opening]
-        choice = random.choice(opening)
+
+        while len(options < 5):
+            choice = random.choice(opening)
+            if choice not in options:
+                options.append(choice)
 
 
 
