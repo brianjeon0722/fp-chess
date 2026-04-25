@@ -86,26 +86,32 @@ def mcq(computer_opening, opening, need_line):
     if need_line == 0:
         options = [computer_opening]
 
+        # generate 3 random openings
         while len(options < 5):
             choice = random.choice(opening)
             if choice not in options:
                 options.append(choice)
+
+        # print these 4 options randomly
     else:
         all_options = []
         options = [computer_opening]
 
+        # filter for all the openings with the same starting name as the computer's opening
         for o in opening: # O(n) :(, maybe fix later?
             if o['name'] == computer_opening['name']:
                 all_options.append(o)
 
+        # if there's less than 3 of these, fill the remainder with other openings
         if len(all_options) < 3:
             while len(all_options < 5):
                choice = random.choice(opening)
                if choice not in all_options:
-                   options.append(choice)
+                   all_options.append(choice)
 
-        for i in range(3):
-            options.append(all_options[random.sample(range(1, len(all_options)))])
+        choices = random.sample(range(0, len(all_options)-1), 3)
+        for c in choices:
+            options.append(c)
 
 
 
