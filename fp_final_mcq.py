@@ -95,7 +95,8 @@ def mcq(computer_opening, opening, need_line):
 
         for openings in opening:
             if openings['name'] == computer_opening['name']:
-                
+                all_options.append(openings)
+        
 
 
 
