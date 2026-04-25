@@ -69,6 +69,7 @@ def check_guess(computer_opening, guesses):
 
             # if line_guess is hint
             # random choice 3 lines
+            # 
 
             if line_name in line_guess:
                 return correct(full_name, guesses)  # ← return the result
