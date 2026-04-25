@@ -3,8 +3,6 @@ import random
 from opening_lines import openings_list
 from opening_only import opening_only
 
-openings = openings_list
-
 def get_guess(question):
     return str(input(question)).lower().strip()
 
@@ -87,16 +85,22 @@ def main():
     except ValueError:
         print("Please input a valid number.")
 
-    try:
-        mode = int(input('Would you like to only guess openings or also variations? Type "1" for openings only and type "2" for openings and variations.'))
+    while True:
+        try:
+            mode = int(input('Would you like to only guess openings or also variations? Type "1" for openings only and type "2" for openings and variations.').strip())
 
-        if mode not in (1, 2):
-            print('Please enter 1 or 2!')
-            continue
-        break
+            if mode not in (1, 2):
+                print('Please enter 1 or 2!')
+                continue
+            break
 
-    except ValueError:
-        print('Please input a valid number.')
+        except ValueError:
+            print('Please input a valid number.')
+
+    if mode == 1:
+        opening = opening_only
+    else:
+        openings = openings_list
     play_game(games)
 
 if __name__ == '__main__':
