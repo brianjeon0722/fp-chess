@@ -92,9 +92,6 @@ def play_game(games, opening):
         guesses = 0
         solved = False
         computer_opening = random.choice(opening)
-        choice2 = random.choice(opening)
-        choice3 = random.choice(opening)
-        choice4 = random.choice(opening)
 
         print(f'### Game {times_played + 1} ###')
         board = chess.Board()
