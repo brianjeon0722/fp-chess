@@ -81,8 +81,22 @@ def play_game(games):
     print(f'You won {wins}/{wins + losses}')
 
 def main():
-    games = int(input('How many times would you like to play? ').strip())
-    
+
+    try:
+        games = int(input('How many times would you like to play? ').strip())
+    except ValueError:
+        print("Please input a valid number.")
+
+    try:
+        mode = int(input('Would you like to only guess openings or also variations? Type "1" for openings only and type "2" for openings and variations.'))
+
+        if mode not in (1, 2):
+            print('Please enter 1 or 2!')
+            continue
+        break
+
+    except ValueError:
+        print('Please input a valid number.')
     play_game(games)
 
 if __name__ == '__main__':
