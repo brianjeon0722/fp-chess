@@ -42,6 +42,12 @@ def check_guess(computer_opening, guesses):
     opening_name = computer_opening.get('name').lower()
     line_name = computer_opening.get('line_name')
 
+    # if initial guess is hint
+        # note: add opening into check_guess()
+        # randonchoice opening 3 times
+
+    # else:
+
     if line_name is None:
         full_name = computer_opening["name"]
         if opening_name in initial_guess:
