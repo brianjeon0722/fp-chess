@@ -99,9 +99,12 @@ def mcq(computer_opening, opening, need_line):
                 all_options.append(o)
 
         if len(all_options) < 3:
-            all_options.append(random.choice(opening))
+            while len(all_options < 5):
+                all_options.append(random.choice(opening))
 
         
+
+
 
 
 
