@@ -100,10 +100,12 @@ def mcq(computer_opening, opening, need_line):
 
         if len(all_options) < 3:
             while len(all_options < 5):
-                all_options.append(random.choice(opening))
+               choice = random.choice(opening)
+               if choice not in all_options:
+                   options.append(choice)
 
         for i in range(3):
-            options.append(all_options[random.choice(range(1, len(all_options)))])
+            options.append(all_options[random.sample(range(1, len(all_options)))])
 
 
 
