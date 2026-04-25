@@ -112,3 +112,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# if you haven't gotten the opening correct --> 4 random openings
+# if you got the opening correct --> random variations WITH that opening
