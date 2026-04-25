@@ -92,11 +92,17 @@ def mcq(computer_opening, opening, need_line):
                 options.append(choice)
     else:
         all_options = []
+        options = [computer_opening]
 
-        for openings in opening:
-            if openings['name'] == computer_opening['name']:
-                all_options.append(openings)
+        for o in opening: # O(n) :(, maybe fix later?
+            if o['name'] == computer_opening['name']:
+                all_options.append(o)
+
+        if len(all_options) < 3:
+            all_options.append(random.choice(opening))
+
         
+
 
 
 
