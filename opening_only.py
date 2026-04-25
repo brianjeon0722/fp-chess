@@ -130,7 +130,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # add into new set
             grouped[opening_name].add(opening.moves_str)
 
-openings_list = []
+openings_only = []
 
 for name, moves in grouped.items():
     if len(moves) >= 10:
@@ -139,14 +139,14 @@ for name, moves in grouped.items():
 
         if len(common_moves) >= 2:
             already = False
-            for item in openings_list:
+            for item in openings_only:
                 if item['moves'] == common_moves:
                     already = True
                     break
 
             if already == False:
                 # transforms
-                openings_list.append({
+                openings_only.append({
                 'name': name,
                 'moves': common_moves})
 
