@@ -82,6 +82,12 @@ def check_guess(computer_opening, guesses):
                 print(f'This is the {full_name}.\n')
             return False, guesses # thanks Chat for this idea
 
+def mcq(computer_opening, opening, need_line):
+    if need_line == 0:
+        options = [computer_opening]
+        choice = random.choice(opening)
+
+
 
 def play_game(games, opening):
     times_played = 0
@@ -99,6 +105,8 @@ def play_game(games, opening):
             board.push_san(move)
             print(board)
             print()
+
+
 
         while not solved and guesses < 3:
             solved, guesses = check_guess(computer_opening, guesses)
