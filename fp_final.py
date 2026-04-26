@@ -4,7 +4,6 @@ from opening_lines import openings_list
 from opening_only import openings_only
 
 def start():
-    print('Welcome to Guess the Opening! You will have 3 attempts to guess an opening / variation\n')
     while True:
         try:
             games = int(input('How many times would you like to play? ').strip())
@@ -14,7 +13,8 @@ def start():
 
     while True:
         try:
-            mode = int(input('Would you like to only guess openings or also variations? Type "1" for openings only and type "2" for openings and variations. ').strip())
+            mode = int(input('Would you like to only guess openings or also variations? Type 1 for openings only and type 2 for openings and variations: '
+            ' ').strip())
 
             if mode not in (1, 2):
                 print('Please enter 1 or 2!')
@@ -24,23 +24,82 @@ def start():
         except ValueError:
             print('Please input a valid number.')
 
+    while True:
+        try:
+            answer_type = int(input('Type 1 for MCQ answers or 2 for short answer: '))
+
+            if answer_type not in (1, 2):
+                print('Please enter 1 or 2!')
+                continue
+            break
+        except ValueError:
+            print('Please input a valid number.')
+
     if mode == 1:
         opening = openings_only
     else:
         opening = openings_list
 
-    return games, opening
+    return games, opening, answer_type
+
+
 
 def get_guess(question):
     return str(input(question)).lower().strip()
 
-def correct(full_name, guesses):
-    print(f'Correct! This is the {full_name}.\n')
-    return True, guesses # thanks Chat for this idea
 
-# written with assistance of Chat
-def check_guess(computer_opening, opening, guesses, opening_correct_answer, opening_solved,
-                line_correct_answer=None, line_mcq_shown=False):
+
+def check_guess_short(computer_opening, guesses):
+    initial_guess = get_guess('What opening is this? ').lower()
+    opening_name = computer_opening.get('name').lower()
+    line_name = computer_opening.get('line_name')
+
+    # if initial guess is hint
+        # note: add opening into check_guess()
+        # randonchoice opening 3 times
+
+    # else:
+
+    if line_name is None:
+        full_name = computer_opening["name"]
+        if opening_name in initial_guess:
+            print(f'Correct! This is the {full_name}.\n')
+            return True, guesses
+        else:
+            guesses += 1
+            print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+            if guesses >= 3:
+                print(f'This is the {full_name}.\n')
+            return False, guesses # thanks Chat for this idea
+
+    else:
+        line_name = line_name.lower()
+        full_name = f'{computer_opening["name"]} {computer_opening["line_name"]}'
+        if line_name in initial_guess:
+            print(f'Correct! This is the {full_name}.\n')
+            return True, guesses
+        elif opening_name in initial_guess:
+            line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ')
+
+            if line_name in line_guess:
+                print(f'Correct! This is the {full_name}.\n')
+                return True, guesses
+            else:
+                guesses += 1
+                print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+                if guesses >= 3:
+                    print(f'This is the {full_name}.\n')
+                return False, guesses # thanks Chat for this idea
+        else:
+            guesses += 1
+            print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
+            if guesses >= 3:
+                print(f'This is the {full_name}.\n')
+            return False, guesses # thanks Chat for this idea
+
+
+
+def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, opening_solved, line_correct_answer=None, line_mcq_shown=False):
     opening_name = computer_opening.get('name').lower()
     line_name = computer_opening.get('line_name')
 
@@ -49,6 +108,7 @@ def check_guess(computer_opening, opening, guesses, opening_correct_answer, open
         initial_guess = get_guess('What opening is this? ').lower().strip()
 
         if opening_name in initial_guess or initial_guess == opening_correct_answer:
+            print(f'Correct! This is the {full_name}.\n')
             return True, guesses, True, line_correct_answer, line_mcq_shown
         else:
             guesses += 1
@@ -65,18 +125,21 @@ def check_guess(computer_opening, opening, guesses, opening_correct_answer, open
         initial_guess = get_guess('What opening is this? ').lower().strip()
 
         if line_name in initial_guess:
+            print(f'Correct! This is the {full_name}.\n')
             return True, guesses, True, line_correct_answer, line_mcq_shown
 
         elif opening_name in initial_guess or initial_guess == opening_correct_answer:
             opening_solved = True
 
             if not line_mcq_shown:
+                print('\n')
                 line_correct_answer = mcq(computer_opening, opening, 1)
                 line_mcq_shown = True
 
             line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ').lower().strip()
 
             if line_name in line_guess or line_guess == line_correct_answer:
+                print(f'Correct! This is the {full_name}.\n')
                 return True, guesses, True, line_correct_answer, line_mcq_shown
             else:
                 guesses += 1
@@ -101,6 +164,7 @@ def check_guess(computer_opening, opening, guesses, opening_correct_answer, open
         line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ').lower().strip()
 
         if line_name in line_guess or line_guess == line_correct_answer:
+            print(f'Correct! This is the {full_name}.\n')
             return True, guesses, True, line_correct_answer, line_mcq_shown
         else:
             guesses += 1
@@ -108,6 +172,8 @@ def check_guess(computer_opening, opening, guesses, opening_correct_answer, open
             if guesses >= 3:
                 print(f'This is the {full_name}.\n')
             return False, guesses, True, line_correct_answer, line_mcq_shown
+
+
 
 def mcq(computer_opening, opening, need_line):
     correct_answer = None
@@ -143,28 +209,29 @@ def mcq(computer_opening, opening, need_line):
 
         # if there's less than 3 of these, fill the remainder with other openings
         if len(all_options) < 3:
-            while len(all_options) < 4:
+            while len(all_options) < 3:
                choice = random.choice(opening)
-               if choice not in all_options:
+               if choice not in all_options and choice != computer_opening:
                    all_options.append(choice)
 
         # pick 3 openings randomly
         choices = random.sample(all_options, 3)
         for c in choices:
-            if c not in options:
-                options.append(c)
+            options.append(c)
 
         # print 4 openings randomly
         i = 0
         for a in range(len(order)):
             if options[order[a]] == computer_opening:
                 correct_answer = notation[i][0]
-            print(f'{notation[i]}{options[order[a]]['line_name']}\n')
+            print(f"{notation[i]}{options[order[a]]['line_name']}\n")
             i += 1
 
     return correct_answer
 
-def play_game(games, opening):
+
+
+def play_game(games, opening, answer_type):
     times_played = 0
     wins = 0
     losses = 0
@@ -175,7 +242,6 @@ def play_game(games, opening):
         opening_solved = False
         line_correct_answer = None
         line_mcq_shown = False
-
         computer_opening = random.choice(opening)
 
         print(f'### Game {times_played + 1} ###')
@@ -185,10 +251,14 @@ def play_game(games, opening):
             print(board)
             print()
 
-        correct_answer = mcq(computer_opening, opening, 0)
+        if answer_type == 1:
+            correct_answer = mcq(computer_opening, opening, 0)
 
         while not solved and guesses < 3:
-            solved, guesses, opening_solved, line_correct_answer, line_mcq_shown = check_guess(computer_opening, opening, guesses, correct_answer, opening_solved, line_correct_answer, line_mcq_shown)
+            if answer_type == 1:
+                solved, guesses, opening_solved, line_correct_answer, line_mcq_shown = check_guess_mcq(computer_opening, opening, guesses, correct_answer, opening_solved, line_correct_answer, line_mcq_shown)
+            else:
+                solved, guesses = check_guess_short(computer_opening, guesses)
 
         if solved:
             wins += 1
@@ -200,9 +270,17 @@ def play_game(games, opening):
     print(f'### Results ###')
     print(f'You won {wins}/{wins + losses}')
 
+
+
 def main():
-    games, opening = start()
-    play_game(games, opening)
+    games, opening, answer_type = start()
+    play_game(games, opening, answer_type)
+
+
 
 if __name__ == '__main__':
     main()
+
+
+# if you haven't gotten the opening correct --> 4 random openings
+# if you got the opening correct --> random variations WITH that opening
