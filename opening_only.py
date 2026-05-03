@@ -144,7 +144,7 @@ for rank in range(len(difficulty_ranks)):
 
             if len(common_moves) >= 2:
                 already = False
-                for item in openings_only:
+                for item in subopenings_only:
                     if item['moves'] == common_moves:
                         already = True
                         break
