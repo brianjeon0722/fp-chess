@@ -151,7 +151,7 @@ for rank in range(len(difficulty_ranks)):
                         break
 
                 if already == False:
-                    # transforms
+                    # transforms 
                     subopenings_only.append({
                     'name': name,
                     'moves': common_moves})

@@ -243,7 +243,7 @@ def mcq(computer_opening, opening, need_line):
         for c in choices:
             options.append(c)
 
-        # print 4 openings randomly
+        # print 4 choices randomly
         i = 0
         for a in range(len(order)):
             if options[order[a]] == computer_opening:
@@ -252,8 +252,6 @@ def mcq(computer_opening, opening, need_line):
             i += 1
 
     return correct_answer
-
-
 
 def play_game(games, opening, answer_type):
     times_played = 0
