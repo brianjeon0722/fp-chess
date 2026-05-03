@@ -103,14 +103,17 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
     opening_name = computer_opening.get('name').lower()
     line_name = computer_opening.get('line_name')
 
-    # if no line name
+    # if no variation
     if line_name is None:
         full_name = computer_opening["name"]
         initial_guess = get_guess('What opening is this? ').lower().strip()
 
+        # this handles responding either in a. (a) or a or saying the actual opening (ex: a. Sicilian vs. a vs. Sicilian)
         if opening_name in initial_guess or initial_guess == opening_correct_answer:
             print(f'Correct! This is the {full_name}.\n')
             return True, guesses, True, line_correct_answer, line_mcq_shown
+
+        #if wrong
         else:
             guesses += 1
             print(f'Not quite. You have {3 - guesses} more attempt(s).\n')
@@ -118,6 +121,7 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
                 print(f'This is the {full_name}.\n')
             return False, guesses, False, line_correct_answer, line_mcq_shown
 
+    # if variation
     line_name = line_name.lower()
     full_name = f'{computer_opening["name"]} {computer_opening["line_name"]}'
 
@@ -125,19 +129,23 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
     if not opening_solved:
         initial_guess = get_guess('What opening is this? ').lower().strip()
 
+        # if you for some reason don't answer the MCQ and just say the variation from the start
         if line_name in initial_guess:
             print(f'Correct! This is the {full_name}.\n')
             return True, guesses, True, line_correct_answer, line_mcq_shown
 
+        # if you got the first MCQ right
         elif opening_name in initial_guess or initial_guess == opening_correct_answer:
             opening_solved = True
 
+            # if you haven't gotten the 2nd MCQ yet
             if not line_mcq_shown:
                 print('\n')
-                line_correct_answer = mcq(computer_opening, opening, 1)
-                line_mcq_shown = True
+                line_correct_answer = mcq(computer_opening, opening, 1) # the 2nd MCQ answer
+                line_mcq_shown = True # you've been shown the 2nd MCQ
 
-            line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ').lower().strip()
+            # get your 2nd MCQ guess
+            line_guess = get_guess(f'Correct! What line of the {computer_opening["name"]} is this? ').lower().strip()
 
             if line_name in line_guess or line_guess == line_correct_answer:
                 print(f'Correct! This is the {full_name}.\n')
@@ -158,7 +166,7 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
 
     # Phase 2: opening already solved, only ask line
     else:
-        line_guess = get_guess(f'Correct! What line of the {computer_opening["name"]} is this? ').lower().strip()
+        line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ').lower().strip()
         if not line_mcq_shown:
             line_correct_answer = mcq(computer_opening, opening, 1)
             line_mcq_shown = True
