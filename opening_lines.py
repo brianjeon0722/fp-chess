@@ -105,7 +105,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                     name = replacement
                     break
 
-            # if there is a : or -, 
+            # if there is a : or -, the part after the : is the line_name
             if len(parts) > 1:
                 line_name = parts[1].strip()
 
