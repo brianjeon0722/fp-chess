@@ -132,6 +132,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
 openings_only = []
 
+# number of times an opening has to exist in the database before using
 difficulty_ranks = [10, 20, 50]
 
 for rank in range(len(difficulty_ranks)):

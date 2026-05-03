@@ -125,6 +125,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
 openings_list = []
 
+# number of times a variation has to exist in the database before including
 difficulty_ranks = [18, 28, 40]
 
 for rank in range(len(difficulty_ranks)):
