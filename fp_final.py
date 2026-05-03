@@ -103,7 +103,7 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
     opening_name = computer_opening.get('name').lower()
     line_name = computer_opening.get('line_name')
 
-    # if no line name,
+    # if no line name
     if line_name is None:
         full_name = computer_opening["name"]
         initial_guess = get_guess('What opening is this? ').lower().strip()
@@ -245,23 +245,30 @@ def play_game(games, opening, answer_type):
         guesses = 0 # not guessed yet
         solved = False # haven't solved anything yet
         opening_solved = False # haven't solved opening yet
-        line_correct_answer = None #
+        line_correct_answer = None # correct answer of the 2nd MCQ
         line_mcq_shown = False # haven't gotten the first MCQ right
         computer_opening = random.choice(opening)
 
         print(f'### Game {times_played + 1} ###')
         board = chess.Board()
+
+        # print the chess board
         for move in computer_opening['moves']:
             board.push_san(move)
             print(board)
             print()
 
+        # if you chose MCQ
         if answer_type == 1:
+            # correct answer of first MCQ
             correct_answer = mcq(computer_opening, opening, 0)
 
+        # while you haven't solved ir or run out of guesses
         while not solved and guesses < 3:
+            # if MCQ
             if answer_type == 1:
                 solved, guesses, opening_solved, line_correct_answer, line_mcq_shown = check_guess_mcq(computer_opening, opening, guesses, correct_answer, opening_solved, line_correct_answer, line_mcq_shown)
+            # if free response
             else:
                 solved, guesses = check_guess_short(computer_opening, guesses)
 
@@ -280,8 +287,6 @@ def play_game(games, opening, answer_type):
 def main():
     games, opening, answer_type = start()
     play_game(games, opening, answer_type)
-
-
 
 if __name__ == '__main__':
     main()
