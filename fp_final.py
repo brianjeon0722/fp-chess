@@ -3,6 +3,7 @@ import random
 from opening_lines import openings_list
 from opening_only import openings_only
 
+# get information on the number of games, variation vs. opening, and mcq vs. free response
 def start():
     while True:
         try:
@@ -43,22 +44,17 @@ def start():
     return games, opening, answer_type
 
 
-
+# clean the input
 def get_guess(question):
     return str(input(question)).lower().strip()
 
-
+# function to check the answer of free response
 def check_guess_short(computer_opening, guesses):
     initial_guess = get_guess('What opening is this? ').lower()
     opening_name = computer_opening.get('name').lower()
     line_name = computer_opening.get('line_name')
 
-    # if initial guess is hint
-        # note: add opening into check_guess()
-        # randonchoice opening 3 times
-
-    # else:
-
+    # if only opening name exists
     if line_name is None:
         full_name = computer_opening["name"]
         if opening_name in initial_guess:
@@ -71,12 +67,17 @@ def check_guess_short(computer_opening, guesses):
                 print(f'This is the {full_name}.\n')
             return False, guesses # thanks Chat for this idea
 
+    # if opening name and variation / line name exists
     else:
         line_name = line_name.lower()
         full_name = f'{computer_opening["name"]} {computer_opening["line_name"]}'
+
+        # if the variation is guessed (we assume if you say Accelerated Dragon, you know this is the Sicilian Accelerated Dragon)
         if line_name in initial_guess:
             print(f'Correct! This is the {full_name}.\n')
             return True, guesses
+
+        # if you just guess the opening but not the variation, we prompt you to guess the variation
         elif opening_name in initial_guess:
             line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ')
 
@@ -97,10 +98,13 @@ def check_guess_short(computer_opening, guesses):
             return False, guesses # thanks Chat for this idea
 
 
+# Claude helped with formatting the MCQ (particularly for the variation version)
+# Goal: start with MCQ of JUST OPENINGS (random). then, when prompted to guess the variation, only randomly pull the
 def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, opening_solved, line_correct_answer=None, line_mcq_shown=False):
     opening_name = computer_opening.get('name').lower()
     line_name = computer_opening.get('line_name')
 
+    # if no line name, 
     if line_name is None:
         full_name = computer_opening["name"]
         initial_guess = get_guess('What opening is this? ').lower().strip()
@@ -171,7 +175,6 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
             return False, guesses, True, line_correct_answer, line_mcq_shown
 
 
-
 def mcq(computer_opening, opening, need_line):
     correct_answer = None
     notation = ['a. ', 'b. ', 'c. ', 'd. ']
@@ -200,7 +203,7 @@ def mcq(computer_opening, opening, need_line):
         options = [computer_opening]
 
         # filter for all the openings with the same starting name as the computer's opening
-        for o in opening: # O(n) :(, maybe fix later?
+        for o in opening:
             if o['name'] == computer_opening['name'] and o != computer_opening:
                 all_options.append(o)
 
@@ -277,6 +280,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# if you haven't gotten the opening correct --> 4 random openings
-# if you got the opening correct --> random variations WITH that opening
