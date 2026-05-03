@@ -48,7 +48,6 @@ def get_guess(question):
     return str(input(question)).lower().strip()
 
 
-
 def check_guess_short(computer_opening, guesses):
     initial_guess = get_guess('What opening is this? ').lower()
     opening_name = computer_opening.get('name').lower()
@@ -96,7 +95,6 @@ def check_guess_short(computer_opening, guesses):
             if guesses >= 3:
                 print(f'This is the {full_name}.\n')
             return False, guesses # thanks Chat for this idea
-
 
 
 def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, opening_solved, line_correct_answer=None, line_mcq_shown=False):
@@ -280,7 +278,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 # if you haven't gotten the opening correct --> 4 random openings
 # if you got the opening correct --> random variations WITH that opening
