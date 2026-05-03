@@ -175,7 +175,7 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
 
 
 # Goal: start with MCQ of JUST OPENINGS (random). then, when prompted to guess the variation, only randomly pull the variations with the same base opening
-# Ex: if the opening is the Sicilian, the 2nd MCQ should be variations of the Sicilian (when possible). 
+# Ex: if the opening is the Sicilian, the 2nd MCQ should be variations of the Sicilian (when possible).
 def mcq(computer_opening, opening, need_line):
     correct_answer = None
     notation = ['a. ', 'b. ', 'c. ', 'd. ']
@@ -239,12 +239,14 @@ def play_game(games, opening, answer_type):
     wins = 0
     losses = 0
 
+    # play until the number of games
     while times_played < games:
-        guesses = 0
-        solved = False
-        opening_solved = False
-        line_correct_answer = None
-        line_mcq_shown = False
+
+        guesses = 0 # not guessed yet
+        solved = False # haven't solved anything yet
+        opening_solved = False # haven't solved opening yet
+        line_correct_answer = None #
+        line_mcq_shown = False # haven't gotten the first MCQ right
         computer_opening = random.choice(opening)
 
         print(f'### Game {times_played + 1} ###')
