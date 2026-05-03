@@ -99,12 +99,11 @@ def check_guess_short(computer_opening, guesses):
 
 
 # Claude helped with formatting the MCQ (particularly for the variation version)
-# Goal: start with MCQ of JUST OPENINGS (random). then, when prompted to guess the variation, only randomly pull the
 def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, opening_solved, line_correct_answer=None, line_mcq_shown=False):
     opening_name = computer_opening.get('name').lower()
     line_name = computer_opening.get('line_name')
 
-    # if no line name, 
+    # if no line name,
     if line_name is None:
         full_name = computer_opening["name"]
         initial_guess = get_guess('What opening is this? ').lower().strip()
@@ -175,11 +174,14 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
             return False, guesses, True, line_correct_answer, line_mcq_shown
 
 
+# Goal: start with MCQ of JUST OPENINGS (random). then, when prompted to guess the variation, only randomly pull the variations with the same base opening
+# Ex: if the opening is the Sicilian, the 2nd MCQ should be variations of the Sicilian (when possible). 
 def mcq(computer_opening, opening, need_line):
     correct_answer = None
     notation = ['a. ', 'b. ', 'c. ', 'd. ']
     order = random.sample(range(0, 4), 4)
 
+    # only need to guess opening
     if need_line == 0:
         options = [computer_opening]
         used_names = {computer_opening['name']}
@@ -198,6 +200,7 @@ def mcq(computer_opening, opening, need_line):
             print(f'{notation[i]}{options[order[a]]['name']}\n')
             i += 1
 
+    # need to guess variation
     else:
         all_options = []
         options = [computer_opening]
