@@ -1,9 +1,36 @@
 from Openix import ChessOpeningsLibrary
 import re
 import os
+from collections import Counter
 
 library = ChessOpeningsLibrary()
 load = library.load_builtin_openings()
+
+# thank you claude for this function
+# tldr: this function essentially finds the collection of prefix strings that are shared by 80% of the list of strings
+# ex: 'e4 c5 d1' 'e4 c5 d2' 'e4 c2 d1' --> 'e4 c5' but only if its 80% of the list etc etc
+def common_move_prefix(move_strings):
+    split_lists = []
+    for s in move_strings:
+        # Extract moves using regex to avoid concatenation
+        moves = re.findall(r'(?:\d+\.\s*)?([a-hNBRQKO][\w\-+=#]*)', s)
+        split_lists.append(moves)
+
+    if not split_lists:
+        return []
+
+    result = []
+    max_len = max(len(m) for m in split_lists)
+
+    for i in range(max_len):
+        candidates = [m[i] for m in split_lists if i < len(m)]
+        most_common, count = Counter(candidates).most_common(1)[0]
+        if count / len(split_lists) >= 0.8:
+            result.append(most_common)
+        else:
+            break
+
+    return result
 
 grouped = {}
 
@@ -17,14 +44,14 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             if opening_name.startswith('talian'): # fix a minor typo i found
                 opening_name = 'I' + opening_name
 
-            # remove everything after numbers
+            # AI helped me with writing the regex and using re library
+            # remove everything after the first ',' ' - ' ':' or '/'
+            opening_name = re.sub(r'\s*(,|/|:|\s-\s).*$', '', opening_name).strip()
+
+            # remove numbers +
             if re.search(r"[1234567890]", opening_name):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
-            # remove everything after the first ,
-            opening_name = opening_name.split(",", 1)[0]
-
-            # AI helped me with writing the regex and using re library
             # remove 'The ' at the beginning
             opening_name = re.sub(r'^\s*[Tt]he\s+', '', opening_name).strip()
 
@@ -42,9 +69,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
             # remove trailing vs. or vs
             opening_name = re.sub(r'\s*vs\.?$', '', opening_name).strip()
-
-            # remove everything after first /
-            opening_name = opening_name.split('/', 1)[0].strip()
 
             # normalize special characters to their ASCII equivalents
             # openings like gruenfeld or reti
@@ -83,12 +107,6 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             # remove trailing :
             opening_name = opening_name.strip(':,').strip()
 
-            # split by : or -
-            parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
-
-            # name is the first part before : or -
-            name = parts[0].strip()
-
             abbreviations = {
                 r'^QGD$': "Queen's Gambit Declined",
                 r'^QGA$': "Queen's Gambit Accepted",
@@ -101,55 +119,44 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             }
 
             for pattern, replacement in abbreviations.items():
-                if re.match(pattern, name, flags=re.IGNORECASE):
-                    name = replacement
+                if re.match(pattern, opening_name, flags=re.IGNORECASE):
+                    opening_name = replacement
                     break
 
-            # if there is a : or -, the part after the : is the line_name
-            if len(parts) > 1:
-                line_name = parts[1].strip()
-
-            # if there is no : or -
-            else:
-                line_name = None
-
-            # opening name + line name
-            key = (name, line_name)
-
-            # if new, create a new set
-            if key not in grouped:
-                grouped[key] = set()
+            # if this opening is new, create new set
+            if opening_name not in grouped:
+                grouped[opening_name] = set()
 
             # add into new set
-            grouped[key].add(opening.moves_str)
+            grouped[opening_name].add(opening.moves_str)
 
-openings_list = []
+openings_only = []
 
-difficulty_ranks = [18, 28, 40]
+difficulty_ranks = [10, 20, 50]
 
 for rank in range(len(difficulty_ranks)):
-    subopenings_list = []
+    subopenings_only = []
 
-    for (name, line_name), moves in grouped.items():
-        if len(moves) >= difficulty_ranks[rank] and line_name != None and line_name != '': # 18 (72), 28 (44), 40 (26)
+    for name, moves in grouped.items():
+        if len(moves) >= 20: # 10, 20, 50
 
-            # AI helped me use os.path
-            common = os.path.commonprefix(list(moves)).rstrip()
+            common_moves = common_move_prefix(list(moves))
 
-            # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
-            common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
+            if len(common_moves) >= 2:
+                already = False
+                for item in openings_only:
+                    if item['moves'] == common_moves:
+                        already = True
+                        break
 
-            if len(common.split()) >= 3:
-                subopenings_list.append({
-                'name': name,
-                'line_name': line_name,
-                'moves': common.split()
-            })
-    openings_list.append(subopenings_list)
+                if already == False:
+                    # transforms
+                    subopenings_only.append({
+                    'name': name,
+                    'moves': common_moves})
+    
 
-
-# for i in openings_list:
+# for i in openings_only:
 #     print(i['name'])
-#     print(i['line_name'])
+# print(len(openings_only))
 
-print(len(openings_list))
