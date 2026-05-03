@@ -52,7 +52,7 @@ def start():
     else:
         opening = openings_list
 
-    opening = opening[difficulty]
+    opening = opening[difficulty-1]
 
     return games, opening, answer_type
 
