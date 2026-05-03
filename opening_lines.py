@@ -17,7 +17,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
             if opening_name.startswith('talian'): # fix a minor typo i found
                 opening_name = 'I' + opening_name
 
-            # remove numbers +
+            # remove everything after numbers
             if re.search(r"[1234567890]", opening_name):
                 opening_name = opening_name[:re.search(r"[1234567890]", opening_name).start()-1]
 
@@ -85,6 +85,8 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
             # split by : or -
             parts = re.split(r'\s*:\s*|\s+-\s+', opening_name, maxsplit=1)
+
+            # name is the first part before : or -
             name = parts[0].strip()
 
             abbreviations = {
@@ -103,9 +105,10 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
                     name = replacement
                     break
 
-            # if there is a : or -
+            # if there is a : or -, 
             if len(parts) > 1:
                 line_name = parts[1].strip()
+
             # if there is no : or -
             else:
                 line_name = None
