@@ -125,24 +125,31 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
 openings_list = []
 
-for (name, line_name), moves in grouped.items():
-    if len(moves) >= 18 and line_name != None and line_name != '': # 18 (72), 28 (44), 40 (26)
+difficulty_ranks = [18, 28, 40]
 
-        # AI helped me use os.path
-        common = os.path.commonprefix(list(moves)).rstrip()
+for rank in range(len(difficulty_ranks)):
+    subopenings_list = []
 
-        # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
-        common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
+    for (name, line_name), moves in grouped.items():
+        if len(moves) >= difficulty_ranks[rank] and line_name != None and line_name != '': # 18 (72), 28 (44), 40 (26)
 
-        if len(common.split()) >= 3:
-            openings_list.append({
-            'name': name,
-            'line_name': line_name,
-            'moves': common.split()
-        })
+            # AI helped me use os.path
+            common = os.path.commonprefix(list(moves)).rstrip()
+
+            # removes numbers from the string '1. e4 c5 2. etc etc' --> 'e4 c5 etc etc'
+            common = re.sub(r'\s*\d+\.(?=\s|$)', '', common).strip()
+
+            if len(common.split()) >= 3:
+                subopenings_list.append({
+                'name': name,
+                'line_name': line_name,
+                'moves': common.split()
+            })
+    openings_list.append(subopenings_list)
+
 
 # for i in openings_list:
 #     print(i['name'])
 #     print(i['line_name'])
 
-print(len(openings_list))
+# print(len(openings_list))

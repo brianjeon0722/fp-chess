@@ -132,23 +132,29 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 
 openings_only = []
 
-for name, moves in grouped.items():
-    if len(moves) >= 20: # 10, 20, 50
+difficulty_ranks = [10, 20, 50]
 
-        common_moves = common_move_prefix(list(moves))
+for rank in range(len(difficulty_ranks)):
+    subopenings_only = []
 
-        if len(common_moves) >= 2:
-            already = False
-            for item in openings_only:
-                if item['moves'] == common_moves:
-                    already = True
-                    break
+    for name, moves in grouped.items():
+        if len(moves) >= 20: # 10, 20, 50
 
-            if already == False:
-                # transforms
-                openings_only.append({
-                'name': name,
-                'moves': common_moves})
+            common_moves = common_move_prefix(list(moves))
+
+            if len(common_moves) >= 2:
+                already = False
+                for item in openings_only:
+                    if item['moves'] == common_moves:
+                        already = True
+                        break
+
+                if already == False:
+                    # transforms
+                    subopenings_only.append({
+                    'name': name,
+                    'moves': common_moves})
+    openings_only.append(subopenings_only)
 
 # for i in openings_only:
 #     print(i['name'])

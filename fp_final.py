@@ -36,10 +36,23 @@ def start():
         except ValueError:
             print('Please input a valid number.')
 
+    while True:
+        try:
+            difficulty = int(input('Type 1 for Hard difficulty. Type 2 for Medium difficulty. Type 3 for Easy difficulty. '))
+
+            if answer_type not in (1, 2, 3):
+                print('Please enter 1, 2, or 3!')
+                continue
+            break
+        except ValueError:
+            print('Please input a valid number.')
+
     if mode == 1:
         opening = openings_only
     else:
         opening = openings_list
+
+    opening = opening[difficulty]
 
     return games, opening, answer_type
 
