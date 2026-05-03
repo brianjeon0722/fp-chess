@@ -155,11 +155,10 @@ def check_guess_mcq(computer_opening, opening, guesses, opening_correct_answer, 
 
     # Phase 2: opening already solved, only ask line
     else:
+        line_guess = get_guess(f'Correct! What line of the {computer_opening["name"]} is this? ').lower().strip()
         if not line_mcq_shown:
             line_correct_answer = mcq(computer_opening, opening, 1)
             line_mcq_shown = True
-
-        line_guess = get_guess(f'What line of the {computer_opening["name"]} is this? ').lower().strip()
 
         if line_name in line_guess or line_guess == line_correct_answer:
             print(f'Correct! This is the {full_name}.\n')
