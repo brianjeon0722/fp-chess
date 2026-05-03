@@ -152,5 +152,5 @@ for name, moves in grouped.items():
 
 # for i in openings_only:
 #     print(i['name'])
-print(len(openings_only))
+# print(len(openings_only))
 

@@ -126,7 +126,7 @@ for letter in ['A', 'B', 'C', 'D', 'E']:
 openings_list = []
 
 for (name, line_name), moves in grouped.items():
-    if len(moves) >= 15 and line_name != None and line_name != '':
+    if len(moves) >= 18 and line_name != None and line_name != '': # 18 (72), 28 (44), 40 (26)
 
         # AI helped me use os.path
         common = os.path.commonprefix(list(moves)).rstrip()
@@ -144,3 +144,5 @@ for (name, line_name), moves in grouped.items():
 # for i in openings_list:
 #     print(i['name'])
 #     print(i['line_name'])
+
+print(len(openings_list))
